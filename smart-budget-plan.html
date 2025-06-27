@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Budget Plan – FundFlow</title>
+  <link rel="stylesheet" href="output.css">
+  <style>
+    html, body { font-family: 'Inter', 'Segoe UI', 'Poppins', 'Roboto', 'Arial', sans-serif !important; }
+    body {
+      background: #0a0a0f;
+      min-height: 100vh;
+      background-image: url('assets/backgrounds/4254694.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .glass-card {
+      backdrop-filter: blur(24px);
+      background: rgba(24, 24, 48, 0.92);
+      border: 2px solid #06b6d4cc;
+      box-shadow: 0 0 40px 8px #06b6d4cc, 0 8px 32px #a21caf88, 0 0 80px 8px #0fffc1cc;
+      position: relative;
+      overflow: hidden;
+      margin-top: 5vh;
+    }
+    .slider-label {
+      color: #0fffc1;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .slider-value {
+      color: #a21caf;
+      font-weight: bold;
+      margin-left: 1rem;
+    }
+    input[type=range] {
+      width: 100%;
+      accent-color: #06b6d4;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen flex items-center justify-center">
+  <!-- Neon background image -->
+  <div class="absolute inset-0 z-0">
+    <img src="assets/backgrounds/4254694.jpg" alt="Neon Background" class="w-full h-full object-cover fixed top-0 left-0" />
+    <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+  </div>
+  <div class="relative z-10 w-full flex flex-col items-center justify-center">
+    <div class="glass-card w-full max-w-2xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col gap-8 items-center border-2 border-cyan-400/40">
+      <h1 class="text-3xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent mb-2 text-center">Smart Budget Plan</h1>
+      <div class="w-full flex flex-col gap-6">
+        <div>
+          <label class="slider-label">🛒 Spending</label>
+          <input id="spendingSlider" type="range" min="0" max="100" value="50">
+          <span id="spendingValue" class="slider-value">50%</span>
+        </div>
+        <div>
+          <label class="slider-label">💰 Savings</label>
+          <input id="savingsSlider" type="range" min="0" max="100" value="30">
+          <span id="savingsValue" class="slider-value">30%</span>
+        </div>
+        <div>
+          <label class="slider-label">💼 Investments</label>
+          <input id="investSlider" type="range" min="0" max="100" value="20">
+          <span id="investValue" class="slider-value">20%</span>
+        </div>
+      </div>
+      <div class="w-full mt-6 p-4 rounded-xl bg-black/30 text-cyan-200 text-center">
+        <div class="font-bold text-lg">Current Savings Goal: ₹<span id="goalAmount">0</span></div>
+        <div class="mt-2">Progress: <span id="goalProgress">0%</span></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('spendingSlider').oninput = function(e) {
+      document.getElementById('spendingValue').textContent = e.target.value+'%';
+    };
+    document.getElementById('savingsSlider').oninput = function(e) {
+      document.getElementById('savingsValue').textContent = e.target.value+'%';
+    };
+    document.getElementById('investSlider').oninput = function(e) {
+      document.getElementById('investValue').textContent = e.target.value+'%';
+    };
+    // Show savings goal and progress
+    function updateGoalInfo() {
+      const goal = parseInt(localStorage.getItem('fundflow_goal') || '0');
+      const income = parseInt(localStorage.getItem('fundflow_income') || '35000');
+      const expenses = parseInt(localStorage.getItem('fundflow_expenses') || '2480');
+      const saved = income - expenses;
+      const percent = goal ? Math.min(100, Math.round((saved/goal)*100)) : 0;
+      document.getElementById('goalAmount').textContent = goal;
+      document.getElementById('goalProgress').textContent = percent + '%';
+    }
+    updateGoalInfo();
+    window.addEventListener('storage', updateGoalInfo);
+  </script>
+</body>
+</html> 

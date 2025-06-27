@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz | Fundflow</title>
+  <link rel="stylesheet" href="output.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Exo:wght@400;700&family=Audiowide&display=swap" rel="stylesheet">
+  <style>
+    html, body, h1, h2, h3, h4, h5, h6, p, span, div, input, button, label, a, li, ul, ol, form, section, nav, main, td, th, strong, em, b, i, textarea, select, option {
+      font-family: 'Orbitron', 'Exo', 'Audiowide', 'Inter', 'Segoe UI', 'Arial', sans-serif !important;
+      letter-spacing: 0.01em;
+    }
+    body {
+      background: #0a0a0f;
+      min-height: 100vh;
+    }
+    .quiz-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.85;
+    }
+    .glass-card { backdrop-filter: blur(24px); background: rgba(24, 24, 48, 0.88); border: 2px solid #06b6d4cc; box-shadow: 0 0 40px 8px #06b6d4cc, 0 8px 32px #a21caf55; }
+    .progress-bar { width: 100%; height: 16px; background: #222; border-radius: 8px; overflow: hidden; margin-bottom: 1.5rem; box-shadow: 0 0 12px #06b6d4cc; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #06b6d4, #a21caf, #0fffc1); border-radius: 8px; transition: width 0.3s; }
+    .option-btn { background: #181830cc; border: 2px solid #06b6d4cc; color: #0fffc1; border-radius: 0.75rem; padding: 0.75rem 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 600; width: 100%; transition: background 0.2s, color 0.2s, border 0.2s; }
+    .option-btn:hover, .option-btn.selected { background: #06b6d4cc; color: #fff; border-color: #a21caf; }
+    .option-btn.correct { background: #22c55e; color: #fff; border-color: #22c55e; }
+    .option-btn.incorrect { background: #ef4444; color: #fff; border-color: #ef4444; }
+    .medal { font-size: 2.5rem; margin: 0 0.5rem; }
+    .floating { animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-18px);} }
+    .neon-underline { position: relative; }
+    .neon-underline::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 100%; height: 3px; background: linear-gradient(90deg,#06b6d4,#a21caf,#f472b6); border-radius: 2px; opacity: 0; transition: opacity 0.3s; }
+    .neon-underline.active::after, .neon-underline:hover::after { opacity: 1; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <img src="assets/backgrounds/3d-abstract-background-with-neon-lights-3d-illustration_441797-558.jpg" alt="Quiz Neon Background" class="quiz-bg" />
+  <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+  <!-- Centered FundFlow Title Card at Top -->
+  <div class="w-full flex justify-center mt-8 mb-4">
+    <a href="dashboard.html" class="rounded-2xl px-8 py-4 shadow-xl border-2 border-cyan-400/60 bg-gradient-to-r from-cyan-900/80 via-fuchsia-900/70 to-purple-900/80 backdrop-blur-lg flex items-center gap-4 justify-center neon-glow hover:scale-105 transition-transform duration-200">
+      <span class="text-4xl">💸</span>
+      <span class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent tracking-wide drop-shadow-lg">FundFlow</span>
+    </a>
+  </div>
+  <main class="flex-1 flex items-center justify-center py-10 z-10">
+    <div class="glass-card w-full max-w-2xl mx-auto rounded-2xl shadow-2xl p-10 flex flex-col items-center border-2 border-cyan-400/40">
+      <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_0_8px_#06b6d4] mb-4 text-center">💸 Are You a Money Master or a Meme Investor?</h1>
+      <p class="text-cyan-100 mb-6 text-center text-lg">Test your Gen Z money smarts! Take this quiz to see if you're a financial pro, a meme investor, or somewhere in between. 🚀</p>
+      <div class="progress-bar"><div id="quizProgress" class="progress-fill" style="width:0%"></div></div>
+      <div id="quizContent" class="w-full"></div>
+    </div>
+  </main>
+  <script>
+    // 15-question finance quiz
+    const quiz = [
+      { q: "What's the 50/30/20 rule in budgeting?", options: ["50% needs, 30% wants, 20% savings/investments", "50% savings, 30% rent, 20% food", "50% stocks, 30% crypto, 20% cash"], answer: 0, explanation: "The 50/30/20 rule is a simple way to budget: 50% for needs, 30% for wants, and 20% for savings/investments." },
+      { q: "What is a mutual fund?", options: ["A pool of money from many investors to buy securities", "A type of cryptocurrency", "A government savings bond"], answer: 0, explanation: "A mutual fund pools money from investors to buy stocks, bonds, or other assets." },
+      { q: "Which is the safest investment?", options: ["Stocks", "Fixed Deposit (FD)", "Cryptocurrency"], answer: 1, explanation: "FDs are generally safer than stocks or crypto, but offer lower returns." },
+      { q: "What does SIP stand for?", options: ["Systematic Investment Plan", "Savings in Progress", "Stock Index Portfolio"], answer: 0, explanation: "SIP means Systematic Investment Plan, a way to invest fixed amounts regularly." },
+      { q: "What is UPI used for?", options: ["Online payments & money transfer", "Stock trading", "Filing taxes"], answer: 0, explanation: "UPI is used for instant online payments and money transfers in India." },
+      { q: "Which expense is a 'need' and not a 'want'?", options: ["Netflix subscription", "Groceries", "Concert tickets"], answer: 1, explanation: "Groceries are a need; the others are wants." },
+      { q: "What is an emergency fund?", options: ["Money for shopping", "Savings for unexpected expenses", "Investment in gold"], answer: 1, explanation: "An emergency fund is savings for unexpected expenses like medical or job loss." },
+      { q: "What is credit score?", options: ["A number showing your loan repayment history", "Your bank account balance", "Your monthly income"], answer: 0, explanation: "Credit score reflects your history of repaying loans and credit cards." },
+      { q: "Which is a recurring expense?", options: ["Buying a phone", "Monthly rent", "Vacation trip"], answer: 1, explanation: "Monthly rent is a recurring expense." },
+      { q: "What is diversification in investing?", options: ["Spreading money across different assets", "Investing all in one stock", "Buying only gold"], answer: 0, explanation: "Diversification means spreading investments to reduce risk." },
+      { q: "What is the main benefit of compounding?", options: ["Earnings generate more earnings", "Lower taxes", "Instant profits"], answer: 0, explanation: "Compounding means your earnings generate more earnings over time." },
+      { q: "What is a budget?", options: ["A plan for spending and saving money", "A type of loan", "A tax refund"], answer: 0, explanation: "A budget is a plan for your income, expenses, and savings." },
+      { q: "Which is a good financial habit?", options: ["Impulse shopping", "Tracking expenses", "Ignoring bills"], answer: 1, explanation: "Tracking expenses is a good financial habit." },
+      { q: "What is the purpose of insurance?", options: ["To protect against financial loss", "To increase income", "To avoid taxes"], answer: 0, explanation: "Insurance protects you from big financial losses (health, car, etc.)." },
+      { q: "What is an asset?", options: ["Something you own that has value", "A monthly bill", "A type of tax"], answer: 0, explanation: "An asset is something valuable you own (cash, property, stocks, etc.)." }
+    ];
+    let current = 0, correct = 0;
+    function renderQuiz() {
+      if (current >= quiz.length) {
+        // Show results and medals
+        let medal = '🥉';
+        if (correct >= 13) medal = '🥇';
+        else if (correct >= 10) medal = '🥈';
+        document.getElementById('quizContent').innerHTML = `
+          <div class='text-2xl font-bold text-cyan-200 mb-4'>Quiz Complete!</div>
+          <div class='text-lg mb-2'>You got <span class='font-bold text-fuchsia-400'>${correct}</span> out of <span class='font-bold text-fuchsia-400'>${quiz.length}</span> correct.</div>
+          <div class='mb-4'>Your Medal: <span class='medal'>${medal}</span></div>
+          <a href='profile.html' class='neon-btn py-2 px-8 rounded-lg text-lg font-bold bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white shadow-lg hover:from-cyan-400 hover:to-fuchsia-400 transition'>Back to Profile</a>
+        `;
+        document.getElementById('quizProgress').style.width = '100%';
+        return;
+      }
+      const q = quiz[current];
+      document.getElementById('quizProgress').style.width = ((current/quiz.length)*100) + '%';
+      document.getElementById('quizContent').innerHTML = `
+        <div class='mb-4 text-lg font-bold text-cyan-200'>Q${current+1}. ${q.q}</div>
+        <div class='flex flex-col gap-3 mb-4'>
+          ${q.options.map((opt,i)=>`<button class='option-btn' onclick='selectOption(${i})'>${opt}</button>`).join('')}
+        </div>
+        <div id='quizFeedback' class='text-cyan-300 font-semibold mb-2'></div>
+      `;
+    }
+    window.selectOption = function(i) {
+      const q = quiz[current];
+      const btns = document.querySelectorAll('.option-btn');
+      btns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.answer) btn.classList.add('correct');
+        if (idx === i && idx !== q.answer) btn.classList.add('incorrect');
+      });
+      let feedback = '';
+      if (i === q.answer) {
+        correct++;
+        feedback = `<div class='flex items-center gap-2 text-green-400'><input type='checkbox' checked disabled> <span>Correct!</span></div><div class='text-xs mt-1 text-cyan-100'>${q.explanation}</div><button class='neon-btn py-2 px-8 rounded-lg mt-4 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold shadow-lg hover:from-cyan-400 hover:to-fuchsia-400 transition' onclick='nextQuestion()'>Next</button>`;
+      } else {
+        feedback = `<div class='flex items-center gap-2 text-red-400'><span>❌</span> <span>Oops!</span></div><div class='text-xs mt-1 text-cyan-100'>${q.explanation}</div><button class='neon-btn py-2 px-8 rounded-lg mt-4 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold shadow-lg hover:from-cyan-400 hover:to-fuchsia-400 transition' onclick='nextQuestion()'>Next</button>`;
+      }
+      document.getElementById('quizFeedback').innerHTML = feedback;
+    }
+    window.nextQuestion = function() {
+      current++;
+      renderQuiz();
+    }
+    // Start quiz
+    renderQuiz();
+  </script>
+  <script src="common.js"></script>
+  <script>window.injectChatbot && window.injectChatbot();</script>
+</body>
+</html> 

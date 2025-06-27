@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Expenses – FundFlow</title>
+  <link rel="stylesheet" href="output.css">
+  <style>
+    html, body { font-family: 'Inter', 'Segoe UI', 'Poppins', 'Roboto', 'Arial', sans-serif !important; }
+    body {
+      background: #0a0a0f;
+      min-height: 100vh;
+      background-image: url('assets/backgrounds/3d-abstract-background-with-neon-lights-3d-illustration_441797-460.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .glass-card {
+      backdrop-filter: blur(24px);
+      background: rgba(24, 24, 48, 0.92);
+      border: 2px solid #06b6d4cc;
+      box-shadow: 0 0 40px 8px #06b6d4cc, 0 8px 32px #a21caf88, 0 0 80px 8px #0fffc1cc;
+      position: relative;
+      overflow: hidden;
+      margin-top: 5vh;
+    }
+    .expense-list {
+      background: rgba(0,0,0,0.2);
+      border-radius: 1rem;
+      padding: 1rem;
+      margin-top: 1rem;
+      color: #fff;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen flex items-center justify-center">
+  <!-- Neon background image -->
+  <div class="absolute inset-0 z-0">
+    <img src="assets/backgrounds/4254694.jpg" alt="Neon Background" class="w-full h-full object-cover fixed top-0 left-0" />
+    <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+  </div>
+  <div class="relative z-10 w-full flex flex-col items-center justify-center">
+    <div class="glass-card w-full max-w-2xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col gap-8 items-center border-2 border-cyan-400/40">
+      <h1 class="text-3xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent mb-2 text-center">Track Expenses</h1>
+      <form id="expenseForm" class="w-full flex flex-col md:flex-row gap-4">
+        <select id="expenseCategory" class="flex-1 px-3 py-2 rounded-lg border border-cyan-400/40 bg-black/40 text-cyan-100 focus:ring-2 focus:ring-cyan-400">
+          <option>🍕 Food & Dining</option>
+          <option>🛍️ Shopping</option>
+          <option>🚗 Travel & Transport</option>
+          <option>🎬 Entertainment</option>
+          <option>💡 Bills & Utilities</option>
+          <option>🏥 Health & Fitness</option>
+          <option>📚 Education</option>
+          <option>🏠 Rent</option>
+          <option>📱 Subscriptions</option>
+          <option>🔄 Other</option>
+        </select>
+        <input id="expenseAmount" type="number" min="1" class="flex-1 px-3 py-2 rounded-lg border border-cyan-400/40 bg-black/40 text-cyan-100 focus:ring-2 focus:ring-cyan-400 placeholder:text-cyan-400" placeholder="e.g., 750">
+        <button type="submit" class="bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold py-2 px-6 rounded-lg shadow-lg hover:from-cyan-400 hover:to-fuchsia-400 transition">Add Expense</button>
+      </form>
+      <div id="expenseList" class="expense-list w-full"></div>
+    </div>
+  </div>
+  <script>
+    const expenseForm = document.getElementById('expenseForm');
+    const expenseList = document.getElementById('expenseList');
+    let expenses = JSON.parse(localStorage.getItem('fundflow_expenses_list') || '[]');
+    renderExpenses();
+    expenseForm.onsubmit = function(e) {
+      e.preventDefault();
+      const cat = document.getElementById('expenseCategory').value;
+      const amt = parseInt(document.getElementById('expenseAmount').value);
+      if (!cat || !amt) return;
+      expenses.push({cat, amt, time: Date.now()});
+      localStorage.setItem('fundflow_expenses_list', JSON.stringify(expenses));
+      updateTotalExpenses();
+      renderExpenses();
+      document.getElementById('expenseAmount').value = '';
+    };
+    function renderExpenses() {
+      expenseList.innerHTML = '';
+      expenses.forEach((ex, i) => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center justify-between bg-black/30 rounded-lg px-3 py-2 border-l-4 border-fuchsia-400 mb-1';
+        div.innerHTML = `<span class='flex items-center gap-1'>${ex.cat}</span><span class='text-fuchsia-400 font-bold'>-\u20b9${ex.amt}</span><button onclick='removeExpense(${i})' class='ml-2 text-xs text-fuchsia-300 hover:text-fuchsia-500'>Remove</button>`;
+        expenseList.appendChild(div);
+      });
+    }
+    function updateTotalExpenses() {
+      const total = expenses.reduce((sum, ex) => sum + ex.amt, 0);
+      localStorage.setItem('fundflow_expenses', total);
+      window.dispatchEvent(new Event('storage'));
+    }
+    window.removeExpense = function(i) {
+      expenses.splice(i,1);
+      localStorage.setItem('fundflow_expenses_list', JSON.stringify(expenses));
+      updateTotalExpenses();
+      renderExpenses();
+    };
+    // On load, update total expenses
+    updateTotalExpenses();
+  </script>
+</body>
+</html> 

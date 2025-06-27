@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Money Goals – Fundflow</title>
+  <link rel="stylesheet" href="output.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Exo:wght@400;700&family=Audiowide&display=swap" rel="stylesheet">
+  <style>
+    html, body, h1, h2, h3, h4, h5, h6, p, span, div, input, button, label, a, li, ul, ol, form, section, nav, main, td, th, strong, em, b, i, textarea, select, option {
+      font-family: 'Orbitron', 'Exo', 'Audiowide', 'Inter', 'Segoe UI', 'Poppins', 'Roboto', 'Arial', sans-serif !important;
+      letter-spacing: 0.01em;
+    }
+    body {
+      background: #0a0a0f;
+      min-height: 100vh;
+      background-image: url('assets/backgrounds/3d-illustration-with-futuristic-tunnel-triangle-shape-with-blue-neon-illumination-4k-uhd_129677-1666.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .bg-img {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.85;
+    }
+    .glass-card {
+      backdrop-filter: blur(24px);
+      background: rgba(24, 24, 48, 0.92);
+      border: 2px solid #06b6d4cc;
+      box-shadow: 0 0 40px 8px #06b6d4cc, 0 8px 32px #a21caf88, 0 0 80px 8px #0fffc1cc;
+      position: relative;
+      overflow: hidden;
+    }
+    .goal-card {
+      background: rgba(255,255,255,0.95);
+      border-radius: 18px;
+      padding: 24px 18px;
+      box-shadow: 0 4px 24px #0002;
+      margin-bottom: 24px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .progress-bar {
+      background: #e0e7ff;
+      border-radius: 8px;
+      height: 10px;
+      width: 100%;
+      margin: 8px 0;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg,#6366f1,#a78bfa);
+      height: 100%;
+      border-radius: 8px;
+      transition: width 0.3s;
+    }
+    @media (max-width: 600px) {
+      .goal-card { padding: 16px 8px; }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center">
+  <!-- Neon Background Image -->
+  <img src="assets/backgrounds/3d-illustration-with-futuristic-tunnel-triangle-shape-with-blue-neon-illumination-4k-uhd_129677-1666.jpg" alt="Neon Goals Background" class="bg-img" />
+  <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+  <!-- FundFlow Icon at Top -->
+  <a href="dashboard.html" class="fixed top-4 left-4 z-50 flex items-center gap-2">
+    <span class="navbar-finance-icon">💸</span>
+    <span class="text-xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent">Fundflow</span>
+  </a>
+  <main class="flex-1 w-full flex flex-col items-center justify-center z-10">
+    <div class="glass-card w-full max-w-2xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col gap-6 items-center border-2 border-cyan-400/40 mt-16">
+      <h1 class="text-3xl font-extrabold bg-gradient-to-r from-cyan-400 via-yellow-400 to-purple-500 bg-clip-text text-transparent mb-2 text-center">Track Your <span class="text-yellow-400">Money</span> Goals 🍇</h1>
+      <p class="text-cyan-100 mb-6 text-center">Set, track, and celebrate your financial milestones!</p>
+      <div class="goal-card">
+        <div><b>Goal:</b> Buy an iPad</div>
+        <div>Progress:</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+        <div>60%</div>
+      </div>
+      <div class="goal-card">
+        <div><b>Goal:</b> Emergency Fund</div>
+        <div>Progress:</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+        <div>30%</div>
+      </div>
+      <div class="goal-card">
+        <div><b>Goal:</b> Trip to Goa</div>
+        <div>Progress:</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+        <div>80%</div>
+      </div>
+    </div>
+  </main>
+  <!-- Bottom Navigation Bar -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-cyan-900/80 to-purple-900/80 border-t-2 border-cyan-400/30 backdrop-blur flex flex-wrap items-center justify-between px-4 py-2 shadow-lg">
+    <a href="dashboard.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Dashboard</a>
+    <a href="goals.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Goals</a>
+    <a href="articles.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Articles</a>
+    <a href="forum.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Forum</a>
+    <a href="view-challenges.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Challenges</a>
+    <a href="analyzer.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Analyzer</a>
+  </nav>
+</body>
+</html> 

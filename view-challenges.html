@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Challenges | Fundflow</title>
+  <link rel="stylesheet" href="output.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Exo:wght@400;700&family=Audiowide&display=swap" rel="stylesheet">
+  <style>
+    html, body, h1, h2, h3, h4, h5, h6, p, span, div, input, button, label, a, li, ul, ol, form, section, nav, main, td, th, strong, em, b, i, textarea, select, option {
+      font-family: 'Orbitron', 'Exo', 'Audiowide', 'Inter', 'Segoe UI', 'Arial', sans-serif !important;
+      letter-spacing: 0.01em;
+    }
+    body {
+      background: #0a0a0f;
+      min-height: 100vh;
+    }
+    .challenges-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.85;
+    }
+    .glass-card {
+      backdrop-filter: blur(24px);
+      background: rgba(24, 24, 48, 0.92);
+      border: 2px solid #06b6d4cc;
+      box-shadow: 0 0 40px 8px #06b6d4cc, 0 8px 32px #a21caf88, 0 0 80px 8px #0fffc1cc;
+      position: relative;
+      overflow: hidden;
+      margin-top: 8vh;
+    }
+    .challenge-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .challenge-row {
+      display: flex;
+      align-items: center;
+      background: rgba(6,182,212,0.08);
+      border-left: 4px solid #a21caf;
+      border-radius: 0.75rem;
+      padding: 1rem 1.5rem;
+      color: #a5f3fc;
+      font-size: 1.1rem;
+      gap: 1rem;
+      justify-content: space-between;
+    }
+    .challenge-info { display: flex; align-items: center; gap: 1rem; }
+    .badge { font-size: 1.5rem; margin-right: 0.5rem; }
+    .join-btn {
+      background: linear-gradient(90deg, #06b6d4, #a21caf, #0fffc1);
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1.5rem;
+      font-size: 1rem;
+      box-shadow: 0 0 8px #06b6d4cc;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .join-btn:hover { background: linear-gradient(90deg, #a21caf, #06b6d4, #0fffc1); transform: scale(1.05); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center">
+  <img src="assets/backgrounds/3d-abstract-background-with-neon-lights-3d-illustration_441797-558.jpg" alt="Challenges Neon Background" class="challenges-bg" />
+  <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+  <!-- FundFlow Title Card at Top, always visible and above all content -->
+  <div class="w-full flex justify-center" style="position:relative; z-index:20; margin-top:2rem; margin-bottom:2rem;">
+    <a href="dashboard.html" class="rounded-2xl px-8 py-4 shadow-xl border-2 border-cyan-400/60 bg-gradient-to-r from-cyan-900/80 via-fuchsia-900/70 to-purple-900/80 backdrop-blur-lg flex items-center gap-4 justify-center neon-glow hover:scale-105 transition-transform duration-200 mx-auto">
+      <span class="text-4xl">💸</span>
+      <span class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent tracking-wide drop-shadow-lg">FundFlow</span>
+    </a>
+  </div>
+  <main class="flex-1 flex items-center justify-center py-10 z-10">
+    <div class="glass-card w-full max-w-2xl mx-auto rounded-2xl shadow-2xl p-10 flex flex-col items-center border-2 border-cyan-400/40">
+      <div class="text-4xl mb-2">🎮</div>
+      <h1 class="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent mb-4 text-center">All Challenges</h1>
+      <p class="text-cyan-100 mb-6 text-center text-lg">Browse and join weekly or monthly money-saving challenges. Earn badges, levels, and rewards!</p>
+      <div class="challenge-list">
+        <div class="challenge-row">
+          <div class="challenge-info"><span class="badge">🏅</span> No-Spend Weekend <span class="text-xs text-cyan-300">(Don't spend any money for two days)</span></div>
+          <span class="text-yellow-300 font-bold">+50 XP</span>
+          <button class="join-btn">Join</button>
+        </div>
+        <div class="challenge-row">
+          <div class="challenge-info"><span class="badge">🍔</span> No Swiggy Sunday <span class="text-xs text-cyan-300">(Save what you'd spend on food delivery)</span></div>
+          <span class="text-yellow-300 font-bold">+40 XP</span>
+          <button class="join-btn">Join</button>
+        </div>
+        <div class="challenge-row">
+          <div class="challenge-info"><span class="badge">💸</span> ₹500 Weekend Challenge <span class="text-xs text-cyan-300">(Live the weekend with ₹500)</span></div>
+          <span class="text-yellow-300 font-bold">+60 XP</span>
+          <button class="join-btn">Join</button>
+        </div>
+        <div class="challenge-row">
+          <div class="challenge-info"><span class="badge">🎯</span> 7-Day Savings Streak <span class="text-xs text-cyan-300">(Save a set amount every day for a week)</span></div>
+          <span class="text-yellow-300 font-bold">+100 XP</span>
+          <button class="join-btn">Join</button>
+        </div>
+        <div class="challenge-row">
+          <div class="challenge-info"><span class="badge">🥤</span> Ditch the Latte <span class="text-xs text-cyan-300">(Skip your daily coffee shop run for a week)</span></div>
+          <span class="text-yellow-300 font-bold">+30 XP</span>
+          <button class="join-btn">Join</button>
+        </div>
+        <div class="challenge-row">
+          <div class="challenge-info"><span class="badge">🛒</span> Grocery Budget Boss <span class="text-xs text-cyan-300">(Stick to a strict grocery budget for a month)</span></div>
+          <span class="text-yellow-300 font-bold">+120 XP</span>
+          <button class="join-btn">Join</button>
+        </div>
+        <div class="challenge-row">
+          <div class="challenge-info"><span class="badge">💡</span> Share a Money Hack <span class="text-xs text-cyan-300">(Post a tip in the forum)</span></div>
+          <span class="text-yellow-300 font-bold">+20 XP</span>
+          <button class="join-btn">Join</button>
+        </div>
+      </div>
+      <div class="text-cyan-200 text-sm text-center">Complete challenges to unlock new levels and earn exclusive badges!</div>
+      <!-- Customer Reviews Section -->
+      <div class="w-full mt-10">
+        <h2 class="text-xl font-bold text-cyan-300 mb-4 text-center">What Gen Z Users Say</h2>
+        <div id="reviewCard" class="glass-card mx-auto max-w-md p-6 rounded-xl shadow-lg border-2 border-fuchsia-400/60 bg-gradient-to-br from-cyan-900/80 via-fuchsia-900/70 to-purple-900/80 backdrop-blur-lg text-center">
+          <!-- Review content will be injected here -->
+        </div>
+      </div>
+      <script>
+        const reviews = [
+          {
+            name: "Aarav S.",
+            text: "FundFlow's challenges made saving fun! I never thought I'd enjoy budgeting this much.",
+            emoji: "😎"
+          },
+          {
+            name: "Priya M.",
+            text: "The badges and XP system keep me motivated. Love the neon vibes!",
+            emoji: "🌈"
+          },
+          {
+            name: "Rohan K.",
+            text: "I joined a circle with friends and now we compete to save more every month. Super cool!",
+            emoji: "🔥"
+          },
+          {
+            name: "Simran T.",
+            text: "The UI is so fresh and the challenges are actually doable. 10/10!",
+            emoji: "💸"
+          },
+          {
+            name: "Zara P.",
+            text: "Mood Coach and challenges helped me control my impulse spending. Highly recommend!",
+            emoji: "🧘"
+          }
+        ];
+        let reviewIdx = 0;
+        function showReview() {
+          const r = reviews[reviewIdx % reviews.length];
+          document.getElementById('reviewCard').innerHTML = `
+            <div class='text-3xl mb-2'>${r.emoji}</div>
+            <div class='text-cyan-100 text-lg mb-2 font-semibold'>"${r.text}"</div>
+            <div class='text-cyan-300 text-sm'>- ${r.name}</div>
+          `;
+          reviewIdx++;
+        }
+        showReview();
+        setInterval(showReview, 4000);
+      </script>
+    </div>
+  </main>
+</body>
+</html> 

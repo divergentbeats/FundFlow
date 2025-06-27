@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Achievements & Streaks – FundFlow</title>
+  <link rel="stylesheet" href="output.css">
+  <style>
+    html, body { font-family: 'Inter', 'Segoe UI', 'Poppins', 'Roboto', 'Arial', sans-serif !important; }
+    body { background: #0a0a0f; min-height: 100vh; }
+    .glass-card {
+      backdrop-filter: blur(24px);
+      background: rgba(24, 24, 48, 0.92);
+      border: 2px solid #06b6d4cc;
+      box-shadow: 0 0 40px 8px #06b6d4cc, 0 8px 32px #a21caf88, 0 0 80px 8px #0fffc1cc;
+      position: relative;
+      overflow: hidden;
+      margin-top: 5vh;
+    }
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 2.5rem);
+      gap: 0.5rem;
+      margin: 2rem 0;
+      justify-content: center;
+    }
+    .calendar-day {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: #181830;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0fffc1;
+      font-weight: bold;
+      font-size: 1.2rem;
+      box-shadow: 0 0 8px #06b6d4cc;
+      border: 2px solid #06b6d4cc;
+      transition: background 0.2s, color 0.2s;
+    }
+    .calendar-day.streak {
+      background: #a21caf;
+      color: #fff;
+      box-shadow: 0 0 16px #a21cafcc;
+      border: 2px solid #fff;
+    }
+    .fundcoins-box {
+      background: rgba(0,0,0,0.2);
+      border-radius: 1rem;
+      padding: 1.5rem 2rem;
+      margin: 1rem 0;
+      text-align: center;
+      color: #fbbf24;
+      font-size: 1.5rem;
+      font-weight: bold;
+      box-shadow: 0 0 16px #fbbf24cc;
+    }
+    .rewards-list {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .reward-item {
+      background: #181830;
+      border-radius: 1rem;
+      padding: 1rem 2rem;
+      color: #fff;
+      font-size: 1.1rem;
+      box-shadow: 0 0 8px #06b6d4cc;
+      border: 2px solid #06b6d4cc;
+      text-align: center;
+    }
+    .reward-item.locked {
+      opacity: 0.5;
+      filter: grayscale(1);
+    }
+  </style>
+</head>
+<body class="relative min-h-screen flex items-center justify-center">
+  <!-- Neon background image -->
+  <div class="absolute inset-0 z-0">
+    <img src="assets/backgrounds/3d-rendering-futuristic-background-with-geometric-shapes-colorful-neon-lights.jpg" alt="Neon Background" class="w-full h-full object-cover fixed top-0 left-0" />
+    <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+  </div>
+  <div class="relative z-10 w-full flex flex-col items-center justify-center">
+    <div class="glass-card w-full max-w-3xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col gap-8 items-center border-2 border-cyan-400/40">
+      <h1 class="text-3xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent mb-2 text-center">Achievements & Streaks</h1>
+      <div class="calendar" id="calendar"></div>
+      <div class="fundcoins-box">FundCoins: <span id="fundcoins">120</span></div>
+      <div class="rewards-list">
+        <div class="reward-item">Sticker Pack<br><span>50 FundCoins</span></div>
+        <div class="reward-item">Custom Avatar<br><span>100 FundCoins</span></div>
+        <div class="reward-item locked">Mystery Box<br><span>200 FundCoins</span></div>
+        <div id="goalBadge" class="reward-item locked">Savings Goal Achiever<br><span>Unlocked at 100%!</span></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Simple calendar streak demo
+    const calendar = document.getElementById('calendar');
+    const today = new Date();
+    const streakDays = 7; // Example streak
+    for(let i=1; i<=30; i++) {
+      const day = document.createElement('div');
+      day.className = 'calendar-day' + (i > 30-streakDays ? ' streak' : '');
+      day.textContent = i;
+      calendar.appendChild(day);
+    }
+    // Unlock badge if savings goal is achieved
+    function checkGoalBadge() {
+      const goal = parseInt(localStorage.getItem('fundflow_goal') || '0');
+      const income = parseInt(localStorage.getItem('fundflow_income') || '35000');
+      const expenses = parseInt(localStorage.getItem('fundflow_expenses') || '2480');
+      const saved = income - expenses;
+      const percent = goal ? Math.min(100, Math.round((saved/goal)*100)) : 0;
+      const badge = document.getElementById('goalBadge');
+      if (percent >= 100) {
+        badge.classList.remove('locked');
+        badge.innerHTML = 'Savings Goal Achiever<br><span>🏆 Unlocked!</span>';
+      } else {
+        badge.classList.add('locked');
+        badge.innerHTML = 'Savings Goal Achiever<br><span>Unlocked at 100%!</span>';
+      }
+    }
+    checkGoalBadge();
+    window.addEventListener('storage', checkGoalBadge);
+  </script>
+</body>
+</html> 

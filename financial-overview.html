@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Overview – FundFlow</title>
+  <link rel="stylesheet" href="output.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Exo:wght@400;700&family=Audiowide&display=swap" rel="stylesheet">
+  <style>
+    html, body, h1, h2, h3, h4, h5, h6, p, span, div, input, button, label, a, li, ul, ol, form, section, nav, main, td, th, strong, em, b, i, textarea, select, option {
+      font-family: 'Orbitron', 'Exo', 'Audiowide', 'Inter', 'Segoe UI', 'Poppins', 'Roboto', 'Arial', sans-serif !important;
+      letter-spacing: 0.01em;
+    }
+    body { background: #0a0a0f; min-height: 100vh; }
+    .bg-img {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.85;
+    }
+    .glass-card {
+      backdrop-filter: blur(24px);
+      background: rgba(24, 24, 48, 0.92);
+      border: 2px solid #06b6d4cc;
+      box-shadow: 0 0 40px 8px #06b6d4cc, 0 8px 32px #a21caf88, 0 0 80px 8px #0fffc1cc;
+      position: relative;
+      overflow: hidden;
+      margin-top: 5vh;
+    }
+    .stat-box {
+      background: rgba(0,0,0,0.2);
+      border-radius: 1rem;
+      padding: 1.5rem 2rem;
+      margin: 1rem;
+      text-align: center;
+      color: #0fffc1;
+      font-size: 1.5rem;
+      font-weight: bold;
+      box-shadow: 0 0 16px #06b6d4cc;
+    }
+    .dark body { background: #0a0a0f; }
+    .dark .glass-card { background: rgba(24, 24, 48, 0.98); }
+    .dark .stat-box { color: #fbbf24; background: rgba(0,0,0,0.4); }
+    .light body { background: #f3f4f6; }
+    .light .glass-card { background: rgba(255,255,255,0.95); }
+    .light .stat-box { color: #06b6d4; background: rgba(0,0,0,0.08); }
+    .toggle-btn {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 50;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #0fffc1;
+      transition: color 0.2s;
+    }
+    .dark .toggle-btn { color: #fbbf24; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="relative min-h-screen flex items-center justify-center">
+  <!-- Neon background image -->
+  <img src="assets/backgrounds/3d-rendering-futuristic-background-with-geometric-shapes-colorful-neon-lights-generative-ai-aig21_31965-151356.jpg" alt="Neon Overview Background" class="bg-img" />
+  <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+  <!-- FundFlow Icon at Top -->
+  <a href="dashboard.html" class="fixed top-4 left-4 z-50 flex items-center gap-2">
+    <span class="navbar-finance-icon">💸</span>
+    <span class="text-xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent">Fundflow</span>
+  </a>
+  <!-- Profile Icon & XP Bar Top Right -->
+  <a href="profile.html" class="fixed top-4 right-6 z-50 flex flex-col items-center group">
+    <div class="rounded-full bg-gradient-to-br from-cyan-400 via-fuchsia-400 to-purple-500 p-1 shadow-xl hover:scale-105 transition-transform duration-200">
+      <span class="text-3xl md:text-4xl bg-white/80 rounded-full px-3 py-2 block">👤</span>
+    </div>
+    <div class="w-24 h-3 mt-2 bg-black/40 rounded-full overflow-hidden border-2 border-cyan-400/60 shadow">
+      <div id="xpBar" class="h-full bg-gradient-to-r from-yellow-400 to-fuchsia-500 rounded-full transition-all"></div>
+    </div>
+    <div id="xpText" class="text-xs text-cyan-100 mt-1 font-bold drop-shadow">XP: 0/0</div>
+  </a>
+  <div class="relative z-10 w-full flex flex-col items-center justify-center">
+    <!-- Prominent FundFlow Title Card -->
+    <a href="dashboard.html" class="block mx-auto mb-4">
+      <div class="rounded-2xl px-8 py-4 shadow-xl border-2 border-cyan-400/60 bg-gradient-to-r from-cyan-900/80 via-fuchsia-900/70 to-purple-900/80 backdrop-blur-lg flex items-center gap-4 justify-center neon-glow hover:scale-105 transition-transform duration-200">
+        <span class="text-4xl">💸</span>
+        <span class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent tracking-wide drop-shadow-lg">FundFlow</span>
+      </div>
+    </a>
+    <div class="glass-card w-full max-w-3xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col gap-8 items-center border-2 border-cyan-400/40">
+      <h1 class="text-3xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent mb-2 text-center">Financial Overview</h1>
+      <div class="flex flex-wrap justify-center w-full">
+        <div class="stat-box" id="incomeBox">Income: ₹<span id="income">42,500</span></div>
+        <div class="stat-box" id="expensesBox">Expenses: ₹<span id="expenses">7,800</span></div>
+        <div class="stat-box" id="balanceBox">Balance: ₹<span id="balance">34,700</span></div>
+        <div class="stat-box" id="savingsBox">Savings Progress: <span id="savingsProgress">68%</span></div>
+      </div>
+      <div class="w-full flex flex-col md:flex-row gap-8 justify-center items-center" style="background:rgba(10,10,15,0.95);border-radius:1.5rem;">
+        <div class="w-full md:w-1/2">
+          <canvas id="pieChart" width="220" height="220"></canvas>
+        </div>
+        <div class="w-full md:w-1/2">
+          <canvas id="barChart" width="220" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Example data for charts
+    window.addEventListener('DOMContentLoaded', function() {
+      var pie = document.getElementById('pieChart');
+      var bar = document.getElementById('barChart');
+      if (pie && bar && window.Chart) {
+        var pieCtx = pie.getContext('2d');
+        var barCtx = bar.getContext('2d');
+        new Chart(pieCtx, {
+          type: 'pie',
+          data: {
+            labels: ['Food', 'Shopping', 'Travel', 'Bills', 'Other'],
+            datasets: [{
+              data: [800, 600, 400, 300, 380],
+              backgroundColor: [
+                '#06b6d4', '#a21caf', '#0fffc1', '#f59e42', '#6366f1'
+              ],
+            }]
+          },
+          options: {
+            plugins: { legend: { labels: { color: '#fff', font: { family: 'Orbitron, Exo, Audiowide, Inter, Segoe UI, Poppins, Roboto, Arial, sans-serif' } } } },
+            backgroundColor: '#181830',
+          }
+        });
+        new Chart(barCtx, {
+          type: 'bar',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            datasets: [{
+              label: 'Expenses',
+              data: [1200, 900, 1500, 800, 1100],
+              backgroundColor: '#a21caf',
+            }]
+          },
+          options: {
+            scales: {
+              x: { ticks: { color: '#fff', font: { family: 'Orbitron, Exo, Audiowide, Inter, Segoe UI, Poppins, Roboto, Arial, sans-serif' } } },
+              y: { ticks: { color: '#fff', font: { family: 'Orbitron, Exo, Audiowide, Inter, Segoe UI, Poppins, Roboto, Arial, sans-serif' } } }
+            },
+            plugins: { legend: { labels: { color: '#fff', font: { family: 'Orbitron, Exo, Audiowide, Inter, Segoe UI, Poppins, Roboto, Arial, sans-serif' } } } },
+            backgroundColor: '#181830',
+          }
+        });
+      }
+    });
+    // XP Bar logic
+    function updateXPBar() {
+      const xp = parseInt(localStorage.getItem('fundflow_xp') || '1200');
+      const xpMax = parseInt(localStorage.getItem('fundflow_xp_max') || '2000');
+      const percent = Math.min(100, Math.round((xp/xpMax)*100));
+      document.getElementById('xpBar').style.width = percent + '%';
+      document.getElementById('xpText').textContent = `XP: ${xp}/${xpMax}`;
+    }
+    updateXPBar();
+    window.addEventListener('storage', updateXPBar);
+  </script>
+</body>
+</html> 

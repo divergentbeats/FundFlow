@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundflow – Profile</title>
+  <link rel="stylesheet" href="output.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Exo:wght@400;700&family=Audiowide&display=swap" rel="stylesheet">
+  <style>
+    html, body, h1, h2, h3, h4, h5, h6, p, span, div, input, button, label, a, li, ul, ol, form, section, nav, main, td, th, strong, em, b, i, textarea, select, option {
+      font-family: 'Orbitron', 'Exo', 'Audiowide', 'Inter', 'Segoe UI', 'Poppins', 'Roboto', 'Arial', sans-serif !important;
+      letter-spacing: 0.01em;
+    }
+    body {
+      background: #0a0a0f;
+      min-height: 100vh;
+    }
+    .profile-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.85;
+    }
+    .glass-card {
+      backdrop-filter: blur(24px);
+      background: rgba(24, 24, 48, 0.92);
+      border: 2px solid #06b6d4cc;
+      box-shadow: 0 0 40px 8px #06b6d4cc, 0 8px 32px #a21caf88, 0 0 80px 8px #0fffc1cc;
+      position: relative;
+      overflow: hidden;
+      margin-top: 5vh;
+    }
+    .profile-avatar {
+      font-size: 3rem;
+      background: #e0e7ff;
+      border-radius: 50%;
+      padding: 18px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 16px #06b6d4cc;
+    }
+    .profile-info {
+      font-size: 1.1rem;
+      color: #0fffc1;
+      margin-bottom: 1rem;
+    }
+    .profile-badges {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .profile-quiz {
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center">
+  <img src="assets/backgrounds/3d-illustration-with-futuristic-tunnel-triangle-shape-with-blue-neon-illumination-4k-uhd_129677-1666.jpg" alt="Profile Neon Background" class="profile-bg" />
+  <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+  <!-- FundFlow Icon at Top -->
+  <a href="dashboard.html" class="fixed top-4 left-4 z-50 flex items-center gap-2">
+    <span class="navbar-finance-icon">💸</span>
+    <span class="text-xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent">Fundflow</span>
+  </a>
+  <main class="flex-1 w-full flex flex-col items-center justify-center">
+    <div class="glass-card w-full max-w-2xl mx-auto rounded-2xl shadow-2xl p-12 flex flex-col gap-10 items-center border-2 border-cyan-400/40">
+      <h1 class="text-4xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent mb-4 text-center">Your Profile & Wallet 🧍</h1>
+      <p class="text-cyan-100 mb-6 text-center text-lg">Personalize your experience and track your achievements.</p>
+      <div class="profile-avatar mb-6" style="font-size:5rem; padding:32px;">👤</div>
+      <div class="profile-info text-xl">Name: <b>Gen Z User</b><br>Level: <b>Silver</b><br>XP: <b>1200</b></div>
+      <div class="profile-badges text-2xl">Badges: <span>🏆 🥇 💸</span></div>
+      <a href="quiz.html" class="neon-btn py-3 px-10 rounded-lg text-lg font-bold mt-4 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white shadow-lg hover:from-cyan-400 hover:to-fuchsia-400 transition">Take Finance Quiz</a>
+    </div>
+  </main>
+  <!-- Move Contact, Public Forum, and Customer Reviews sections to just above the bottom nav bar -->
+</body>
+</html> 

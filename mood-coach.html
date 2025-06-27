@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood Coach | Fundflow</title>
+  <link rel="stylesheet" href="output.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Exo:wght@400;700&family=Audiowide&display=swap" rel="stylesheet">
+  <style>
+    html, body, h1, h2, h3, h4, h5, h6, p, span, div, input, button, label, a, li, ul, ol, form, section, nav, main, td, th, strong, em, b, i, textarea, select, option {
+      font-family: 'Orbitron', 'Exo', 'Audiowide', 'Inter', 'Segoe UI', 'Arial', sans-serif !important;
+      letter-spacing: 0.01em;
+    }
+    body {
+      background: #0a0a0f;
+      min-height: 100vh;
+    }
+    .mood-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.85;
+    }
+    .glass-card {
+      backdrop-filter: blur(24px);
+      background: rgba(24, 24, 48, 0.92);
+      border: 2px solid #06b6d4cc;
+      box-shadow: 0 0 40px 8px #06b6d4cc, 0 8px 32px #a21caf88, 0 0 80px 8px #0fffc1cc;
+      position: relative;
+      overflow: hidden;
+      margin-top: 8vh;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center">
+  <img src="assets/backgrounds/3d-illustration-blue-purple-futuristic-sci-fi-techno-lights-cool-background_181624-57587.jpg" alt="Mood Coach Neon Background" class="mood-bg" />
+  <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+  <!-- FundFlow Title Card at Top, always visible and above all content -->
+  <div class="w-full flex justify-center" style="position:relative; z-index:20; margin-top:2rem; margin-bottom:2rem;">
+    <a href="dashboard.html" class="rounded-2xl px-8 py-4 shadow-xl border-2 border-cyan-400/60 bg-gradient-to-r from-cyan-900/80 via-fuchsia-900/70 to-purple-900/80 backdrop-blur-lg flex items-center gap-4 justify-center neon-glow hover:scale-105 transition-transform duration-200 mx-auto">
+      <span class="text-4xl">💸</span>
+      <span class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent tracking-wide drop-shadow-lg">FundFlow</span>
+    </a>
+  </div>
+  <main class="flex-1 flex items-center justify-center py-10 z-10">
+    <div class="glass-card w-full max-w-2xl mx-auto rounded-2xl shadow-2xl p-10 flex flex-col items-center border-2 border-cyan-400/40">
+      <div class="text-4xl mb-2">🧘</div>
+      <h1 class="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent mb-4 text-center">Mood Coach</h1>
+      <p class="text-cyan-100 mb-6 text-center text-lg">See how your mood affects your spending. Get tips for healthier money habits!</p>
+      <div class="w-full flex flex-col gap-6">
+        <div class="bg-black/30 rounded-xl p-6 flex flex-col gap-2 border-l-4 border-cyan-400">
+          <div class="font-bold text-cyan-300 text-lg mb-2">Actionable Tips:</div>
+          <ul class="list-disc list-inside text-cyan-100 text-base mb-2">
+            <li>Track your mood daily and notice spending patterns.</li>
+            <li>Pause before impulse buys—ask yourself if it's mood or need.</li>
+            <li>Set a "cool-off" period for big purchases.</li>
+            <li>Celebrate non-spending days with a reward (not shopping!).</li>
+            <li>Share your mood and money wins in your circle for support.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-8 text-cyan-200 text-sm text-center">Your mood matters! FundFlow helps you build mindful money habits. 🌱</div>
+    </div>
+  </main>
+</body>
+</html> 
