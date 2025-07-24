@@ -74,22 +74,15 @@
     }
   </style>
   <style>
-    /* Shooting Star Canvas Enhancement */
-    #shootingStarCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 2;
-      pointer-events: none;
+    .text-black, .text-\[\#312e81\], .text-black\/40, .text-black\/30, .text-black\/60, .text-black\/80, .text-black\/90, .text-black\/70 {
+      color: #b0b6c8 !important;
+    }
+    .font-extrabold, .font-bold, .font-semibold, .font-medium, .font-normal, .font-light, .font-thin {
+      color: #b0b6c8;
     }
   </style>
 </head>
 <body class="relative min-h-screen flex flex-col">
-  <!-- Shooting Star Lasers Canvas Overlay -->
-  <canvas id="shootingStarCanvas"></canvas>
-
   <!-- Neon video background -->
   <div class="absolute inset-0 z-0">
     <img id="dashboard-bg-fallback" src="assets/backgrounds/3d-rendering-futuristic-background-with-geometric-shapes-colorful-neon-lights.jpg" alt="Neon Fallback" class="w-full h-full object-cover fixed top-0 left-0" />
@@ -123,33 +116,226 @@
     <canvas class="confetti" id="confettiCanvas"></canvas>
 
     <main class="flex flex-col items-center py-10">
-      <!-- [All original dashboard section HTML exactly as you provided] -->
-      <!-- ... -->
-      <!-- Please insert your original main dashboard content here -->
+      <!-- Financial Overview Card (clickable) -->
+      <section onclick="window.location.href='financial-overview.html'" class="cursor-pointer glass-card w-full max-w-3xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col items-center mb-16 card-anim section-spacer hover:scale-105 transition">
+        <div class="text-cyan-300 font-bold text-lg mb-4 flex items-center gap-1">📈 Financial Overview</div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 w-full">
+          <div class="flex flex-col items-center">
+            <div class="text-2xl font-extrabold">₹42,500</div>
+            <div class="text-xs text-cyan-200 mt-1">Total Income</div>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="text-2xl font-extrabold">₹7,800</div>
+            <div class="text-xs text-cyan-200 mt-1">Total Expenses</div>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="text-2xl font-extrabold">₹34,700</div>
+            <div class="text-xs text-cyan-200 mt-1">Available Balance</div>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="text-2xl font-extrabold">68%</div>
+            <div class="text-xs text-cyan-200 mt-1">Savings Progress</div>
+          </div>
+        </div>
+      </section>
+      <!-- Track Expenses Card: add more categories -->
+      <section onclick="window.location.href='track-expenses.html'" class="cursor-pointer glass-card w-full max-w-3xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col mb-16 card-anim section-spacer hover:scale-105 transition">
+        <div class="text-cyan-300 font-bold text-lg mb-4 flex items-center gap-1">💳 Track Expenses</div>
+        <form id="expenseForm" class="flex flex-col md:flex-row gap-4 w-full mb-4">
+          <select id="expenseCategory" class="flex-1 px-3 py-2 rounded-lg border border-cyan-400/40 bg-black/40 text-cyan-100 focus:ring-2 focus:ring-cyan-400">
+            <option>🍕 Food & Dining</option>
+            <option>🛍️ Shopping</option>
+            <option>🚗 Travel & Transport</option>
+            <option>🎬 Entertainment</option>
+            <option>💡 Bills & Utilities</option>
+            <option>🏥 Health & Fitness</option>
+            <option>📚 Education</option>
+            <option>🏠 Rent</option>
+            <option>📱 Subscriptions</option>
+            <option>🔄 Other</option>
+          </select>
+          <input id="expenseAmount" type="number" min="1" class="flex-1 px-3 py-2 rounded-lg border border-cyan-400/40 bg-black/40 text-cyan-100 focus:ring-2 focus:ring-cyan-400 placeholder:text-cyan-400" placeholder="e.g., 750">
+          <button type="submit" class="bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold py-2 px-6 rounded-lg shadow-lg hover:from-cyan-400 hover:to-fuchsia-400 transition">Add Expense</button>
+        </form>
+        <div id="expenseList" class="space-y-2 w-full"></div>
+      </section>
+      <!-- Savings Goals Card -->
+      <section onclick="window.location.href='goals.html'" class="cursor-pointer glass-card w-full max-w-3xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col mb-16 card-anim section-spacer hover:scale-105 transition">
+        <div class="text-cyan-300 font-bold text-lg mb-4 flex items-center gap-1">🎯 Savings Goals</div>
+        <form id="goalForm" class="flex flex-col md:flex-row gap-4 w-full mb-4">
+          <input id="goalAmount" type="number" min="1" class="flex-1 px-3 py-2 rounded-lg border border-cyan-400/40 bg-black/40 text-cyan-100 focus:ring-2 focus:ring-cyan-400 placeholder:text-cyan-400" placeholder="e.g., 5000">
+          <button type="submit" class="bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold py-2 px-6 rounded-lg shadow-lg hover:from-cyan-400 hover:to-fuchsia-400 transition">Set Goal</button>
+        </form>
+        <div class="w-full h-4 bg-cyan-900/60 rounded mb-2 overflow-hidden">
+          <div id="goalProgress" class="h-4 bg-gradient-to-r from-cyan-400 to-fuchsia-400 rounded transition-all" style="width:0%"></div>
+        </div>
+        <div class="text-cyan-200 text-sm">Goal Progress: <span id="goalProgressText">0%</span></div>
+      </section>
+      <!-- Smart Budget Plan Card -->
+      <section onclick="window.location.href='smart-budget-plan.html'" class="cursor-pointer glass-card w-full max-w-3xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col mb-16 card-anim section-spacer hover:scale-105 transition">
+        <div class="text-cyan-300 font-bold text-lg mb-4 flex items-center gap-1">🔥 Smart Budget Plan</div>
+        <div class="flex flex-col gap-4 w-full">
+          <div class="flex items-center justify-between mb-1">
+            <span>🛒 Spending</span>
+            <input id="spendingSlider" type="range" min="0" max="100" value="50" class="w-1/2 accent-cyan-400">
+            <span id="spendingValue">50%</span>
+          </div>
+          <div class="flex items-center justify-between mb-1">
+            <span>💰 Savings</span>
+            <input id="savingsSlider" type="range" min="0" max="100" value="30" class="w-1/2 accent-fuchsia-400">
+            <span id="savingsValue">30%</span>
+          </div>
+          <div class="flex items-center justify-between mb-1">
+            <span>💼 Investments</span>
+            <input id="investSlider" type="range" min="0" max="100" value="20" class="w-1/2 accent-purple-400">
+            <span id="investValue">20%</span>
+          </div>
+        </div>
+      </section>
+      <!-- Achievements & Advice Card -->
+      <section class="w-full max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+        <div class="glass-card rounded-2xl shadow-2xl p-8 flex flex-col items-center card-anim">
+          <div class="text-cyan-300 font-bold text-lg mb-4 flex items-center gap-1">🏆 Achievements</div>
+          <div class="flex gap-3 text-3xl animate-bounce mb-2" id="badges">
+            <span title="First Expense" class="drop-shadow-[0_0_8px_#06b6d4]">🥇</span>
+            <span title="Goal Achiever" class="drop-shadow-[0_0_8px_#06b6d4]">🏆</span>
+            <span title="Streak" class="drop-shadow-[0_0_8px_#06b6d4]">🔥</span>
+          </div>
+          <div class="mt-2 text-cyan-200 text-sm">Daily Streak: <span class="font-bold text-fuchsia-400">3</span> days</div>
+          <button onclick="window.location.href='achievements.html'" class="mt-4 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold py-2 px-6 rounded-lg shadow-lg hover:from-cyan-400 hover:to-fuchsia-400 transition">Claim Reward</button>
+        </div>
+        <div class="glass-card rounded-2xl shadow-2xl p-8 flex flex-col items-center card-anim">
+          <div class="text-fuchsia-300 font-bold text-lg mb-4 flex items-center gap-1">💡 Financial Advice</div>
+          <div id="adviceText" class="bg-gradient-to-r from-yellow-400 to-orange-400 text-[#312e81] font-bold px-4 py-3 rounded-xl shadow mb-2 animate-fade-in text-center">An investment in knowledge pays the best interest. — Benjamin Franklin</div>
+          <p class="text-xs">Pro tip: With ₹<span id="adviceBalance">32,520</span> available, explore investment options like mutual funds or SIPs! 🚀</p>
+        </div>
+      </section>
+      <!-- About Card -->
+      <section class="glass-card w-full max-w-3xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col items-center mb-16 card-anim section-spacer">
+        <div class="text-fuchsia-300 font-bold text-lg mb-4 flex items-center gap-1">👋 About FundFlow</div>
+        <p class="text-cyan-100 text-center max-w-xl mb-4">Hi! I'm <b>FundFlow</b>, your Gen Z finance buddy. I love helping people master their money, set goals, and have fun with finance. This dashboard shows off my best features and how I can help you level up your financial game!</p>
+        <a href="chatbot.html" class="mt-4 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold py-2 px-6 rounded-lg shadow-lg hover:from-cyan-400 hover:to-fuchsia-400 transition">
+          Click here if you want assistance with your wallet!
+        </a>
+      </section>
+      <!-- Skills Card -->
+      <section class="glass-card w-full max-w-3xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col items-center mb-16 card-anim section-spacer">
+        <div class="text-cyan-300 font-bold text-lg mb-4 flex items-center gap-1">🛠️ Skills</div>
+        <ul class="grid grid-cols-2 md:grid-cols-3 gap-4 w-full text-center">
+          <li class="bg-black/30 rounded-lg px-4 py-2 border-l-4 border-cyan-400 hover:scale-105 transition">Budgeting</li>
+          <li class="bg-black/30 rounded-lg px-4 py-2 border-l-4 border-fuchsia-400 hover:scale-105 transition">Expense Tracking</li>
+          <li class="bg-black/30 rounded-lg px-4 py-2 border-l-4 border-purple-400 hover:scale-105 transition">Goal Setting</li>
+          <li class="bg-black/30 rounded-lg px-4 py-2 border-l-4 border-yellow-400 hover:scale-105 transition">Gamification</li>
+          <li class="bg-black/30 rounded-lg px-4 py-2 border-l-4 border-green-400 hover:scale-105 transition">AI Advice</li>
+          <li class="bg-black/30 rounded-lg px-4 py-2 border-l-4 border-blue-400 hover:scale-105 transition">Community Forum</li>
+        </ul>
+      </section>
+      <!-- Contact Card -->
+      <section class="glass-card w-full max-w-3xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col items-center mb-16 card-anim section-spacer">
+        <div class="text-cyan-300 font-bold text-lg mb-4 flex items-center gap-1">📬 Contact</div>
+        <form class="flex flex-col gap-4 w-full max-w-md">
+          <input type="text" placeholder="Your Name" class="rounded-lg px-3 py-2 bg-black/40 text-cyan-100 border border-cyan-400/30 focus:outline-none focus:ring-2 focus:ring-fuchsia-400" required>
+          <input type="email" placeholder="Your Email" class="rounded-lg px-3 py-2 bg-black/40 text-cyan-100 border border-cyan-400/30 focus:outline-none focus:ring-2 focus:ring-fuchsia-400" required>
+          <textarea placeholder="Your Message" class="rounded-lg px-3 py-2 bg-black/40 text-cyan-100 border border-cyan-400/30 focus:outline-none focus:ring-2 focus:ring-fuchsia-400" required></textarea>
+          <button type="submit" class="bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold py-2 px-6 rounded-lg shadow-lg hover:from-cyan-400 hover:to-fuchsia-400 transition">Send Message</button>
+        </form>
+      </section>
+      <!-- Forum Card -->
+      <section class="glass-card w-full max-w-3xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col items-center mb-16 card-anim section-spacer">
+        <div class="text-fuchsia-300 font-bold text-lg mb-4 flex items-center gap-1">🌐 Public Forum</div>
+        <form id="forumForm" class="flex flex-col md:flex-row gap-4 w-full mb-4">
+          <input id="forumName" type="text" placeholder="Your Name" class="flex-1 rounded-lg px-3 py-2 bg-black/40 text-cyan-100 border border-cyan-400/30 focus:outline-none focus:ring-2 focus:ring-fuchsia-400" required>
+          <input id="forumMsg" type="text" placeholder="Share something..." class="flex-1 rounded-lg px-3 py-2 bg-black/40 text-cyan-100 border border-cyan-400/30 focus:outline-none focus:ring-2 focus:ring-fuchsia-400" required>
+          <button type="submit" class="bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white font-bold py-2 px-6 rounded-lg shadow-lg hover:from-cyan-400 hover:to-fuchsia-400 transition">Post</button>
+        </form>
+        <div id="forumList" class="space-y-2 w-full"></div>
+      </section>
+      <!-- Customer Reviews Card -->
+      <section class="glass-card w-full max-w-3xl mx-auto rounded-2xl shadow-2xl p-8 flex flex-col items-center mb-16 card-anim section-spacer">
+        <div class="text-cyan-300 font-bold text-lg mb-4 flex items-center gap-1">⭐ Customer Reviews</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full" id="reviews">
+          <div class="bg-black/30 rounded-lg px-4 py-4 border-l-4 border-yellow-400 animate-pulse">
+            <div class="font-bold text-yellow-300 mb-1">Aarav S.</div>
+            <div class="text-cyan-100 mb-2">"Fundflow made budgeting fun and easy. Love the gamification!"</div>
+            <div class="text-yellow-400">★★★★★</div>
+          </div>
+          <div class="bg-black/30 rounded-lg px-4 py-4 border-l-4 border-fuchsia-400 animate-pulse">
+            <div class="font-bold text-fuchsia-300 mb-1">Priya M.</div>
+            <div class="text-cyan-100 mb-2">"The AI advice is actually helpful and the site looks amazing!"</div>
+            <div class="text-yellow-400">★★★★★</div>
+          </div>
+        </div>
+      </section>
+      <!-- Feature Cards Section (centered, responsive, animated) -->
+      <section class="w-full max-w-6xl mx-auto flex flex-col items-center justify-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 w-full">
+          <!-- Gamified Challenges -->
+          <div class="glass-card flex flex-col items-center p-6 gap-4 animate-fade-in-right">
+            <span class="text-4xl">🎮</span>
+            <h2 class="text-xl font-bold">Gamified Challenges</h2>
+            <p class="text-cyan-100 text-center">Take on weekly or monthly money-saving challenges and earn badges, levels, and rewards!</p>
+            <a href="view-challenges.html" class="neon-btn py-2 px-6 rounded-lg">View Challenges</a>
+          </div>
+          <!-- Social Finance Circles -->
+          <div class="glass-card flex flex-col items-center p-6 gap-4 animate-fade-in">
+            <span class="text-4xl">🤝</span>
+            <h2 class="text-xl font-bold">Social Finance Circles</h2>
+            <p class="text-cyan-100 text-center">Create groups with friends, set common goals, compete, and share money hacks together.</p>
+            <a href="circles.html" class="neon-btn py-2 px-6 rounded-lg">Join a Circle</a>
+          </div>
+          <!-- Learn & Earn: Financial Quizzes -->
+          <div class="glass-card flex flex-col items-center p-6 gap-4 animate-fade-in-right">
+            <span class="text-4xl">📚</span>
+            <h2 class="text-xl font-bold">Learn & Earn: Financial Quizzes</h2>
+            <p class="text-cyan-100 text-center">Take fun, bite-sized quizzes and earn coins for right answers. Redeem for rewards!</p>
+            <a href="quiz.html" class="neon-btn py-2 px-6 rounded-lg">Take a Quiz</a>
+          </div>
+          <!-- Micro-Investing Made Easy (redirects to Groww) -->
+          <div class="glass-card flex flex-col items-center p-6 gap-4 animate-fade-in-left cursor-pointer" onclick="window.open('https://groww.in/', '_blank')">
+            <span class="text-4xl">📈</span>
+            <h2 class="text-xl font-bold">Micro-Investing Made Easy</h2>
+            <p class="text-cyan-100 text-center">Invest tiny amounts in mutual funds or digital gold with just 1 click. Start small, grow big!</p>
+            <span class="neon-btn py-2 px-6 rounded-lg">Start Investing</span>
+          </div>
+          <!-- Emergency Jar -->
+          <div class="glass-card flex flex-col items-center p-6 gap-4 animate-fade-in">
+            <span class="text-4xl">🔒</span>
+            <h2 class="text-xl font-bold">Emergency Jar</h2>
+            <p class="text-cyan-100 text-center">Build and lock your emergency fund. Unlock it only by completing a financial task or quiz!</p>
+            <a href="#" class="neon-btn py-2 px-6 rounded-lg">Build Emergency Jar</a>
+          </div>
+          <!-- Money & Mind: Mood Coach -->
+          <div class="glass-card flex flex-col items-center p-6 gap-4 animate-fade-in-right">
+            <span class="text-4xl">🧘</span>
+            <h2 class="text-xl font-bold">Money & Mind: Mood Coach</h2>
+            <p class="text-cyan-100 text-center">See how your mood affects your spending. Get tips for healthier money habits.</p>
+            <a href="mood-coach.html" class="neon-btn py-2 px-6 rounded-lg">Meet Mood Coach</a>
+          </div>
+        </div>
+      </section>
+      <!-- Address/Contact Bar at Bottom -->
+      <footer class="w-full bg-gradient-to-r from-cyan-900/80 to-purple-900/80 border-t-2 border-cyan-400/30 backdrop-blur flex flex-col md:flex-row items-center justify-between px-6 py-4 shadow-lg text-cyan-200 text-sm z-50">
+        <div class="flex items-center gap-4 mb-2 md:mb-0">
+          <span class="font-bold text-cyan-300">Contact:</span>
+          <span>📍 Mumbai, India</span>
+          <span>✉️ <a href="mailto:fundflowapp@gmail.com" class="underline hover:text-fuchsia-400">fundflowapp@gmail.com</a></span>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://instagram.com/yourfundflow" target="_blank" class="hover:text-fuchsia-400"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://twitter.com/yourfundflow" target="_blank" class="hover:text-fuchsia-400"><i class="fab fa-twitter"></i> Twitter</a>
+          <a href="https://linkedin.com/company/yourfundflow" target="_blank" class="hover:text-fuchsia-400"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        </div>
+      </footer>
+      <!-- Move main navigation bar to bottom -->
+      <nav class="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-cyan-900/80 to-purple-900/80 border-t-2 border-cyan-400/30 backdrop-blur flex flex-wrap items-center justify-between px-4 py-2 shadow-lg">
+        <a href="dashboard.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Dashboard</a>
+        <a href="goals.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Goals</a>
+        <a href="articles.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Articles</a>
+        <a href="forum.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Forum</a>
+        <a href="view-challenges.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Challenges</a>
+        <a href="analyzer.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Analyzer</a>
+      </nav>
     </main>
-
-    <!-- Navigation and footer as you had them -->
-    <footer class="w-full bg-gradient-to-r from-cyan-900/80 to-purple-900/80 border-t-2 border-cyan-400/30 backdrop-blur flex flex-col md:flex-row items-center justify-between px-6 py-4 shadow-lg text-cyan-200 text-sm z-50">
-      <div class="flex items-center gap-4 mb-2 md:mb-0">
-        <span class="font-bold text-cyan-300">Contact:</span>
-        <span>📍 Mumbai, India</span>
-        <span>✉️ <a href="mailto:fundflowapp@gmail.com" class="underline hover:text-fuchsia-400">fundflowapp@gmail.com</a></span>
-      </div>
-      <div class="flex items-center gap-4">
-        <a href="https://instagram.com/yourfundflow" target="_blank" class="hover:text-fuchsia-400"><i class="fab fa-instagram"></i> Instagram</a>
-        <a href="https://twitter.com/yourfundflow" target="_blank" class="hover:text-fuchsia-400"><i class="fab fa-twitter"></i> Twitter</a>
-        <a href="https://linkedin.com/company/yourfundflow" target="_blank" class="hover:text-fuchsia-400"><i class="fab fa-linkedin"></i> LinkedIn</a>
-      </div>
-    </footer>
-
-    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-cyan-900/80 to-purple-900/80 border-t-2 border-cyan-400/30 backdrop-blur flex flex-wrap items-center justify-between px-4 py-2 shadow-lg">
-      <a href="dashboard.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Dashboard</a>
-      <a href="goals.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Goals</a>
-      <a href="articles.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Articles</a>
-      <a href="forum.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Forum</a>
-      <a href="view-challenges.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Challenges</a>
-      <a href="analyzer.html" class="font-bold text-cyan-300 hover:text-fuchsia-400 transition flex-1 text-center">Analyzer</a>
-    </nav>
   </div>
   <script src="https://kit.fontawesome.com/4e7b8b6e2a.js" crossorigin="anonymous"></script>
   <script>
@@ -258,67 +444,6 @@
     }
     setInterval(rotateAdvice, 5000);
     rotateAdvice();
-  </script>
-  <script>
-    // Shooting Star Enhancement code
-    (function () {
-      const canvas = document.getElementById('shootingStarCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      function sizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
-      sizeCanvas();
-      window.addEventListener('resize', sizeCanvas);
-
-      class ShootingStar {
-        constructor() { this.reset(); }
-        reset() {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * (canvas.height * 0.4);
-          this.len = 60 + Math.random() * 80;
-          this.speed = 8 + Math.random() * 12;
-          this.angle = Math.PI / 4;
-          this.opacity = 1.1;
-          this.fade = 0.017 + Math.random() * 0.01;
-        }
-        update() {
-          this.x += this.speed * Math.cos(this.angle);
-          this.y += this.speed * Math.sin(this.angle);
-          this.opacity -= this.fade;
-          if (this.opacity <= 0 || this.x > canvas.width + this.len || this.y > canvas.height + this.len) this.reset();
-        }
-        draw(ctx) {
-          let xEnd = this.x - this.len * Math.cos(this.angle);
-          let yEnd = this.y - this.len * Math.sin(this.angle);
-          let grad = ctx.createLinearGradient(this.x, this.y, xEnd, yEnd);
-          grad.addColorStop(0, `rgba(0,255,255,${this.opacity})`);
-          grad.addColorStop(1, `rgba(245,0,255,0)`);
-          ctx.strokeStyle = grad;
-          ctx.lineWidth = 2.2;
-          ctx.beginPath();
-          ctx.moveTo(this.x, this.y);
-          ctx.lineTo(xEnd, yEnd);
-          ctx.shadowColor = '#0fffc1';
-          ctx.shadowBlur = 12;
-          ctx.stroke();
-          ctx.shadowBlur = 0;
-        }
-      }
-
-      const stars = Array.from({ length: 12 }, () => new ShootingStar());
-
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        stars.forEach((star) => {
-          star.update();
-          star.draw(ctx);
-        });
-        requestAnimationFrame(animate);
-      }
-      animate();
-    })();
   </script>
   <script src="common.js"></script>
   <script>window.injectChatbot && window.injectChatbot({ position: 'bottom-left', alwaysOn: true });</script>
