@@ -14,8 +14,11 @@
             letter-spacing: 0.03em; /* Slightly increased letter spacing for Orbitron */
         }
         
-        /* Original background and min-height */
-        body {
+        /* CSS Reset for centering issues */
+        html, body {
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+            height: 100%; /* Ensure html takes full height */
             background: #0a0a0f;
             min-height: 100vh;
         }
