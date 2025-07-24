@@ -204,83 +204,97 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            const nameInput = document.querySelector('input[placeholder="Name"]');
-            const ageInput = document.querySelector('input[placeholder="Age"]');
-            const emailInput = document.querySelector('input[placeholder="Email"]');
-            const passwordInput = document.querySelector('input[placeholder="Password"]');
-            
-            // Create a div for error messages (hidden by default)
-            const errorMessageDiv = document.createElement('div');
-            errorMessageDiv.className = 'text-red-400 text-sm mt-2 text-center font-medium'; // Tailwind classes for styling
-            errorMessageDiv.style.display = 'none'; // Initially hidden
-            // Insert the error message div before the submit button in the form
-            form.insertBefore(errorMessageDiv, form.querySelector('button[type="submit"]'));
+       document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
 
-            form.addEventListener('submit', function(e) {
-                e.preventDefault(); // Prevent default form submission
+    // Add this check to ensure the form was found before proceeding
+    if (!form) {
+        console.error('Login form not found on the page!');
+        return; // Stop script execution if form is not found
+    }
 
-                let isValid = true;
-                let messages = [];
+    const nameInput = document.querySelector('input[placeholder="Name"]');
+    const ageInput = document.querySelector('input[placeholder="Age"]');
+    const emailInput = document.querySelector('input[placeholder="Email"]');
+    const passwordInput = document.querySelector('input[placeholder="Password"]');
 
-                // Reset error states
-                nameInput.classList.remove('error');
-                ageInput.classList.remove('error');
-                emailInput.classList.remove('error');
-                passwordInput.classList.remove('error');
-                errorMessageDiv.style.display = 'none';
+    const errorMessageDiv = document.createElement('div');
+    errorMessageDiv.className = 'text-red-400 text-sm mt-2 text-center font-medium';
+    errorMessageDiv.style.display = 'none';
+    
+    // Ensure the button exists before trying to insertBefore it
+    const submitButton = form.querySelector('button[type="submit"]');
+    if (submitButton) {
+        form.insertBefore(errorMessageDiv, submitButton);
+    } else {
+        // Fallback: if submit button not found, append to form
+        form.appendChild(errorMessageDiv);
+        console.warn('Submit button not found in form, error messages might not appear in optimal location.');
+    }
 
-                // Simple validation checks
-                if (nameInput.value.trim() === '') {
-                    isValid = false;
-                    messages.push('Name is required.');
-                    nameInput.classList.add('error'); // Add error class
-                }
+    form.addEventListener('submit', function(e) {
+        console.log('Form submission attempted!'); // Keep this for debugging
+        e.preventDefault(); // Stop the default form submission
 
-                if (ageInput.value.trim() === '') {
-                    isValid = false;
-                    messages.push('Age is required.');
-                    ageInput.classList.add('error');
-                }
+        let isValid = true;
+        let messages = [];
 
-                if (emailInput.value.trim() === '') {
-                    isValid = false;
-                    messages.push('Email is required.');
-                    emailInput.classList.add('error');
-                }
+        // Reset error states
+        nameInput.classList.remove('error');
+        ageInput.classList.remove('error');
+        emailInput.classList.remove('error');
+        passwordInput.classList.remove('error');
+        errorMessageDiv.style.display = 'none'; // Hide previous error messages
 
-                if (passwordInput.value.trim() === '') {
-                    isValid = false;
-                    messages.push('Password is required.');
-                    passwordInput.classList.add('error');
-                }
+        // Simple validation checks
+        if (nameInput && nameInput.value.trim() === '') {
+            isValid = false;
+            messages.push('Name is required.');
+            nameInput.classList.add('error');
+        }
 
-                if (!isValid) {
-                    errorMessageDiv.textContent = messages.join(' '); // Display all messages
-                    errorMessageDiv.style.display = 'block'; // Show error message
-                } else {
-                    // If all valid, redirect to dashboard
-                    window.location.href = 'dashboard.html';
-                }
-            });
+        if (ageInput && ageInput.value.trim() === '') {
+            isValid = false;
+            messages.push('Age is required.');
+            ageInput.classList.add('error');
+        }
 
-            // Social Login Redirects (Realistic but not functional login)
-            const googleLoginBtn = document.getElementById('googleLoginBtn');
-            const githubLoginBtn = document.getElementById('githubLoginBtn');
+        if (emailInput && emailInput.value.trim() === '') {
+            isValid = false;
+            messages.push('Email is required.');
+            emailInput.classList.add('error');
+        }
 
-            if (googleLoginBtn) {
-                googleLoginBtn.addEventListener('click', function() {
-                    window.location.href = 'https://accounts.google.com/signin'; // Redirect to Google's sign-in page
-                });
-            }
+        if (passwordInput && passwordInput.value.trim() === '') {
+            isValid = false;
+            messages.push('Password is required.');
+            passwordInput.classList.add('error');
+        }
 
-            if (githubLoginBtn) {
-                githubLoginBtn.addEventListener('click', function() {
-                    window.location.href = 'https://github.com/login/oauth/authorize'; // Redirect to GitHub's OAuth authorization page
-                });
-            }
+        if (!isValid) {
+            errorMessageDiv.textContent = messages.join(' '); // Display all messages
+            errorMessageDiv.style.display = 'block'; // Show error message
+        } else {
+            // If all valid, redirect to dashboard
+            window.location.href = 'dashboard.html';
+        }
+    });
+
+    const googleLoginBtn = document.getElementById('googleLoginBtn');
+    const githubLoginBtn = document.getElementById('githubLoginBtn');
+
+    if (googleLoginBtn) {
+        googleLoginBtn.addEventListener('click', function() {
+            window.location.href = 'https://accounts.google.com/signin';
         });
+    }
+
+    if (githubLoginBtn) {
+        githubLoginBtn.addEventListener('click', function() {
+            window.location.href = 'https://github.com/login/oauth/authorize';
+        });
+    }
+});
     </script>
 </body>
 </html>
