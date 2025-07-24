@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login to Fundflow</title>
     <link rel="stylesheet" href="output.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Orbitron for all text -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Fonts and resets */
-        html, body {
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 0.01em;
+        /* Base Font Styling: Orbitron for all text */
+        html, body, h1, h2, h3, h4, h5, h6, p, span, div, input, button, label, a, li, ul, ol, form, section, nav, main, td, th, strong, em, b, i, textarea, select, option {
+            font-family: 'Orbitron', sans-serif !important; /* Apply Orbitron to all elements */
+            letter-spacing: 0.03em; /* Slightly increased letter spacing for Orbitron */
+        }
+        
+        /* Original background and min-height */
+        body {
             background: #0a0a0f;
             min-height: 100vh;
         }
 
-        /* Container */
+        /* Container for main content */
         .container {
             display: flex;
             flex-direction: column;
@@ -23,30 +28,48 @@
             justify-content: center;
             min-height: 100vh;
             position: relative;
-            z-index: 10;
+            z-index: 10; /* Ensure content is above background */
+            padding: 20px; /* Add some padding for smaller screens */
         }
 
-        /* Background */
+        /* Background Image (fixed) */
         .background {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
+            /* Using the suggested path. Ensure this image exists in your repo. */
             background: url('/assets/backgrounds/3d-abstract-background-with-neon-lights-3d-illustration_441797-460.jpg') center/cover no-repeat;
-            z-index: 0;
+            z-index: 0; /* Behind everything */
         }
+        /* Dark Overlay */
         .overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1;
+            background: rgba(0, 0, 0, 0.7); /* Darker overlay for better contrast */
+            z-index: 1; /* Above background image, below content */
         }
 
-        /* Neon button styles */
-        .neon-btn, .login-btn, .social-btn {
-            transition: all 0.3s ease-in-out;
+        /* Animated Grid Overlay (New Enhancement) */
+        .grid-overlay {
+            position: fixed; /* Use fixed to cover full viewport */
+            inset: 0;
+            z-index: 2; /* Above the main background and dark overlay, but below content */
+            background-image:
+                repeating-linear-gradient(0deg, #06b6d433 0, transparent 1px, transparent 100px), /* Cyan horizontal lines */
+                repeating-linear-gradient(90deg, #0fffc133 0, transparent 1px, transparent 100px); /* Green vertical lines */
+            background-size: 100px 100px; /* Size of each grid cell */
+            animation: grid-pulse 4s infinite alternate; /* Subtle pulse animation */
+            pointer-events: none; /* Allows clicks to pass through */
         }
-        .neon-btn:hover, .login-btn:hover, .social-btn:hover {
-            transform: scale(1.05);
+
+        @keyframes grid-pulse {
+            0% { opacity: 0.1; }
+            100% { opacity: 0.25; }
+        }
+
+        /* General button active state */
+        .neon-btn:active, .login-btn:active, .social-btn:active {
+            transform: scale(0.98); /* Press effect */
         }
 
         /* Inputs */
@@ -54,63 +77,377 @@
             background: rgba(24, 24, 48, 0.9);
             border: 2px solid #06b6d4;
             box-shadow: 0 0 10px #06b6d4aa;
-            padding: 0.6rem 1rem;
-            border-radius: 0.5rem;
+            padding: 0.8rem 1.2rem; /* Slightly more padding */
+            border-radius: 0.75rem; /* More rounded */
             color: #fff;
+            width: 100%; /* Ensure full width */
+            box-sizing: border-box; /* Include padding/border in width */
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
         .neon-input:focus {
             outline: none;
             border-color: #a21caf;
             box-shadow: 0 0 20px #a21caf99, 0 0 30px #06b6d4aa;
         }
+        /* Error state for inputs */
+        .neon-input.error {
+            border-color: #ef4444 !important; /* Tailwind red-500 */
+            box-shadow: 0 0 16px #ef4444cc !important;
+        }
 
         /* Card */
         .glass-card {
             background: rgba(24, 24, 48, 0.85);
             border: 2px solid #06b6d4;
-            border-radius: 1rem;
+            border-radius: 1.5rem; /* More rounded card */
             box-shadow: 0 0 30px #06b6d4aa, 0 8px 32px #a21caf77;
             backdrop-filter: blur(20px);
-            max-width: 420px;
+            max-width: 450px; /* Slightly wider card */
             width: 90%;
-            padding: 2rem;
+            padding: 2.5rem; /* More internal padding */
+            display: flex; /* Use flex for internal layout */
+            flex-direction: column;
+            gap: 1.5rem; /* Spacing between elements */
         }
 
+        /* FundFlow Logo (the <a> tag itself) - Reverted to previously liked gradient background and shadow */
         .logo {
-            font-size: 2.5rem;
+            background: linear-gradient(145deg, #00ffe7, #e100ff); /* Reverted: Previously liked gradient */
+            border: 2px solid #00ffe7; /* Reverted: Border matching start of gradient */
+            box-shadow: 0 0 12px #00ffe7, 0 0 24px #e100ff; /* Reverted: Previously liked box-shadow */
+            backdrop-filter: blur(10px); /* Slightly less blur for the logo box */
+            border-radius: 2rem; /* Rounded corners for the box */
+            padding: 1rem 2rem; /* Padding inside the box */
+            margin-bottom: 2rem; /* Space below logo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+            cursor: default; /* Change cursor to default to indicate it's not a link anymore */
+        }
+        .logo:hover {
+            transform: translateY(-5px) scale(1.03); /* Lift and grow on hover */
+            /* Reverted: Enhanced glow on hover matching previously liked colors */
+            box-shadow: 0 0 20px #00ffe7, 0 0 40px #e100ff, 0 0 60px #00ffe7;
+        }
+        /* Styling for the text inside the logo <a> tag */
+        .logo span {
+            font-size: 3rem; /* Larger logo text */
             font-weight: 800;
-            background: linear-gradient(90deg, #06b6d4, #a21caf, #0fffc1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1.5rem;
+            /* Text color remains white for contrast with the new background */
+            color: white; 
             text-align: center;
+            line-height: 1; /* Adjust line height for better vertical alignment */
+            display: inline-block; /* Essential for background-clip to work */
+            /* Text shadow to make it pop against the gradient */
+            text-shadow: 
+                0 0 5px rgba(255,255,255,0.8), /* White glow */
+                0 0 10px rgba(0,255,231,0.6), /* Cyan glow */
+                0 0 15px rgba(225,0,255,0.4); /* Magenta glow */
+        }
+        .logo .emoji { /* Style for the emoji within the logo */
+            font-size: 3rem;
+            line-height: 1;
+        }
+
+        /* Login to Fundflow Heading (h1) - Updated with new background, color, and box-shadow */
+        .glass-card h1 {
+            background: linear-gradient(145deg, #00ffe7, #e100ff); /* Requested background gradient */
+            color: white; /* Requested text color */
+            box-shadow: 0 0 12px #00ffe7, 0 0 24px #e100ff; /* Requested box-shadow */
+            padding: 0.75rem 1.5rem; /* Padding around the text */
+            border-radius: 0.75rem; /* Rounded corners for the box */
+            margin-bottom: 1.5rem; /* Space below the heading box */
+            display: inline-block; /* Allows padding and background to apply correctly */
+            /* Center the block if it's not full width */
+            margin-left: auto;
+            margin-right: auto;
+            
+            /* Adjusted text-shadow for visibility on the new background */
+            text-shadow:
+                0 0 8px rgba(255, 255, 255, 0.7), /* Soft white glow */
+                0 0 15px rgba(0, 255, 231, 0.5), /* Cyan glow */
+                0 0 20px rgba(225, 0, 255, 0.3); /* Magenta glow */
+        }
+
+
+        /* OR separator style */
+        .or-separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            margin: 1.5rem 0;
+            color: #bbb; /* A soft grey */
+            font-size: 0.9rem; /* Slightly smaller text */
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .or-separator::before,
+        .or-separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #333; /* Darker line */
+        }
+        .or-separator:not(:empty)::before {
+            margin-right: .75em;
+        }
+        .or-separator:not(:empty)::after {
+            margin-left: .75em;
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: #ef4444; /* Red color for errors */
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: -1rem; /* Adjust spacing */
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Login button enhancements - NEW STYLES FROM .button */
+        .login-btn {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px; /* Updated border-radius */
+            padding: 12px 24px; /* Updated padding */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Updated box-shadow */
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Combined transitions */
+            width: 100%; /* Ensure it takes full width within its flex container */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            font-size: 1rem; /* Keep consistent with social buttons */
+            text-align: center; /* Ensure text is centered */
+            display: flex; /* Use flex to center content if needed */
+            align-items: center;
+            justify-content: center;
+            cursor: pointer; /* Indicate it's clickable */
+        }
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px); /* Subtle lift on hover */
+        }
+        /* Removed @keyframes pulse-border as it's no longer used for login-btn */
+
+        /* Social button styles - NEW STYLES FROM .social-button */
+        .social-btn {
+            background: transparent; /* Updated background */
+            color: #00ffff; /* Updated color */
+            border: 2px solid #00ffff; /* Updated border */
+            padding: 10px 20px; /* Updated padding */
+            border-radius: 8px; /* Updated border-radius */
+            font-weight: bold;
+            position: relative;
+            transition: 0.3s ease; /* Updated transition */
+            width: 100%; /* Ensure full width */
+            box-sizing: border-box; /* Include padding/border in width */
+            z-index: 0; /* Ensures pseudo-element is behind */
+            display: flex; /* Use flex to center content */
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem; /* Keep gap for icon and text */
+            cursor: pointer; /* Indicate it's clickable */
+        }
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #0ff, #00f, #f0f);
+            filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1; /* Place behind the button content */
+        }
+        .social-btn:hover::before {
+            opacity: 1;
+        }
+        .social-btn:hover {
+            background-color: #0ff; /* Updated background on hover */
+            color: black; /* Updated text color on hover */
+            transform: translateY(-2px); /* Subtle lift on hover */
+            box-shadow: none; /* Remove previous box-shadow on hover */
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .glass-card {
+                padding: 1.5rem;
+                margin-top: 2vh;
+                margin-bottom: 2vh;
+            }
+            .logo {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                padding: 0.75rem 1.5rem;
+            }
+            .logo span {
+                font-size: 2rem;
+            }
+            .logo .emoji {
+                font-size: 2rem;
+            }
+            .neon-input {
+                padding: 0.7rem 1rem;
+            }
+            .login-btn, .social-btn {
+                padding: 10px 20px; /* Consistent padding for smaller screens */
+                font-size: 0.9rem; /* Slightly smaller font for smaller screens */
+            }
+            .glass-card h1 {
+                font-size: 2rem; /* Adjust heading size for smaller screens */
+                padding: 0.6rem 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Background elements -->
     <div class="background"></div>
     <div class="overlay"></div>
+    <div class="grid-overlay"></div> <!-- New: Animated Grid Overlay -->
+
     <div class="container">
-        <a href="dashboard.html" class="logo">💸 FundFlow</a>
+        <!-- FundFlow Title Card - Removed href to prevent redirect -->
+        <a class="logo">
+            <span class="emoji">💸</span>
+            <span>FundFlow</span>
+        </a>
+
         <div class="glass-card">
-            <h1 class="text-xl text-center text-white font-bold mb-4">Login to FundFlow</h1>
+            <!-- Login to FundFlow Heading - Text gradient removed, now with solid color, white background box -->
+            <h1 class="text-3xl text-center font-bold">Login to FundFlow</h1>
             <form class="flex flex-col gap-4">
                 <input type="text" placeholder="Name" class="neon-input">
                 <input type="number" placeholder="Age" class="neon-input">
                 <input type="email" placeholder="Email" class="neon-input">
                 <input type="password" placeholder="Password" class="neon-input">
-                <button class="login-btn bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 py-2 rounded-md text-white font-bold">Login</button>
+                <!-- Error message div will be dynamically inserted here by JS -->
+                <button type="submit" class="login-btn py-2 rounded-md font-bold">Login</button>
             </form>
-            <div class="or-separator text-gray-300 text-center my-4">OR</div>
-            <div class="flex flex-col gap-2">
-                <button class="social-btn bg-white text-black py-2 rounded-md font-semibold flex items-center justify-center gap-2">
+
+            <div class="or-separator">OR</div>
+
+            <div class="flex flex-col gap-3" style="width: 100%; align-items: center;"> <!-- Added inline style for centering -->
+                <button class="social-btn py-2 rounded-md font-semibold flex items-center justify-center gap-2" id="googleLoginBtn">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" width="20"> Continue with Google
                 </button>
-                <button class="social-btn bg-white text-black py-2 rounded-md font-semibold flex items-center justify-center gap-2">
+                <button class="social-btn py-2 rounded-md font-semibold flex items-center justify-center gap-2" id="githubLoginBtn">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" width="20"> Continue with GitHub
                 </button>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            
+            // Check if form exists
+            if (!form) {
+                console.error('Login form not found on the page!');
+                return;
+            }
+
+            const nameInput = document.querySelector('input[placeholder="Name"]');
+            const ageInput = document.querySelector('input[placeholder="Age"]');
+            const emailInput = document.querySelector('input[placeholder="Email"]');
+            const passwordInput = document.querySelector('input[placeholder="Password"]');
+            
+            // Create a div for error messages
+            const errorMessageDiv = document.createElement('div');
+            errorMessageDiv.className = 'error-message'; // Use the new error-message class
+            errorMessageDiv.style.display = 'none'; // Initially hidden
+
+            // Insert the error message div before the submit button
+            const submitButton = form.querySelector('button[type="submit"]');
+            if (submitButton) {
+                form.insertBefore(errorMessageDiv, submitButton);
+            } else {
+                form.appendChild(errorMessageDiv);
+                console.warn('Submit button not found in form, error messages might not appear in optimal location.');
+            }
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                let isValid = true;
+                let messages = [];
+
+                // Reset error states and hide previous messages
+                nameInput.classList.remove('error');
+                ageInput.classList.remove('error');
+                emailInput.classList.remove('error');
+                passwordInput.classList.remove('error');
+                errorMessageDiv.style.display = 'none';
+                errorMessageDiv.textContent = ''; // Clear previous messages
+
+                // Validation checks
+                if (nameInput.value.trim() === '') {
+                    isValid = false;
+                    messages.push('Name is required.');
+                    nameInput.classList.add('error');
+                }
+
+                if (ageInput.value.trim() === '') {
+                    isValid = false;
+                    messages.push('Age is required.');
+                    ageInput.classList.add('error');
+                } else if (isNaN(ageInput.value) || parseInt(ageInput.value) <= 0) {
+                    isValid = false;
+                    messages.push('Age must be a positive number.');
+                    ageInput.classList.add('error');
+                }
+
+                if (emailInput.value.trim() === '') {
+                    isValid = false;
+                    messages.push('Email is required.');
+                    emailInput.classList.add('error');
+                } else if (!emailInput.value.includes('@') || !emailInput.value.includes('.')) {
+                    isValid = false;
+                    messages.push('Invalid email format.');
+                    emailInput.classList.add('error');
+                }
+
+                if (passwordInput.value.trim() === '') {
+                    isValid = false;
+                    messages.push('Password is required.');
+                    passwordInput.classList.add('error');
+                } else if (passwordInput.value.length < 6) {
+                    isValid = false;
+                    messages.push('Password must be at least 6 characters.');
+                    passwordInput.classList.add('error');
+                }
+
+                if (!isValid) {
+                    errorMessageDiv.textContent = messages.join(' '); // Display all messages
+                    errorMessageDiv.style.display = 'block'; // Show error message
+                } else {
+                    // If all valid, redirect to dashboard
+                    window.location.href = 'dashboard.html';
+                }
+            });
+
+            // Social Login Redirects
+            const googleLoginBtn = document.getElementById('googleLoginBtn');
+            const githubLoginBtn = document.getElementById('githubLoginBtn');
+
+            if (googleLoginBtn) {
+                googleLoginBtn.addEventListener('click', function() {
+                    window.location.href = 'https://accounts.google.com/signin'; // Redirect to Google's sign-in page
+                });
+            }
+
+            if (githubLoginBtn) {
+                githubLoginBtn.addEventListener('click', function() {
+                    window.location.href = 'https://github.com/login/oauth/authorize'; // Redirect to GitHub's OAuth authorization page
+                });
+            }
+        });
+    </script>
 </body>
 </html>
