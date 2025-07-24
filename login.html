@@ -7,294 +7,110 @@
     <link rel="stylesheet" href="output.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* Existing CSS - no major changes */
-        html, body, h1, h2, h3, h4, h5, h6, p, span, div, input, button, label, a, li, ul, ol, form, section, nav, main, td, th, strong, em, b, i, textarea, select, option {
-            font-family: 'Inter', 'Segoe UI', 'Poppins', 'Roboto', 'Arial', sans-serif !important;
+        /* Fonts and resets */
+        html, body {
+            font-family: 'Inter', sans-serif;
             letter-spacing: 0.01em;
-        }
-        body { background: #0a0a0f; min-height: 100vh; }
-        .glass-card {
-            backdrop-filter: blur(24px);
-            background: rgba(24, 24, 48, 0.92);
-            border: 2px solid #06b6d4cc;
-            box-shadow: 0 0 40px 8px #06b6d4cc, 0 8px 32px #a21caf88, 0 0 80px 8px #0fffc1cc;
-            position: relative;
-            overflow: hidden;
-            margin-top: 5vh;
-        }
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 2rem;
-            border: 3px solid #0fffc1;
-            box-shadow: 0 0 32px #0fffc1cc, 0 0 64px #a21cafcc;
-            opacity: 0.5;
-            pointer-events: none;
-            animation: border-glow 2s linear infinite alternate;
-        }
-        @keyframes border-glow {
-            0% { box-shadow: 0 0 32px #0fffc1cc, 0 0 64px #a21cafcc; }
-            100% { box-shadow: 0 0 64px #0fffc1cc, 0 0 128px #a21cafcc; }
-        }
-        @keyframes neon-flicker {
-            0%, 100% { filter: brightness(1); }
-            45% { filter: brightness(1.1); }
-            50% { filter: brightness(1.3); }
-            55% { filter: brightness(0.9); }
-            60% { filter: brightness(1.2); }
-        }
-        .login-anim { transition: transform 0.2s, box-shadow 0.2s; }
-        .login-anim:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 8px 32px #06b6d4cc, 0 0 80px 8px #0fffc1cc; }
-        
-        /* === BEGIN: New/Polished CSS === */
-        .neon-input { 
-            background: #181830; 
-            color: #fff; 
-            border: 2px solid #06b6d4cc; 
-            box-shadow: 0 0 12px #06b6d4cc; 
-            transition: border-color 0.2s, box-shadow 0.2s; /* Added transition */
-        }
-        .neon-input:focus { 
-            outline: none; 
-            border-color: #a21caf; 
-            box-shadow: 0 0 16px #a21cafcc, 0 0 32px #06b6d4cc; 
-            transform: scale(1.01); /* Subtle grow on focus */
-        }
-        /* Style for invalid input fields */
-        .neon-input.error {
-            border-color: #ef4444 !important; /* Tailwind red-500 */
-            box-shadow: 0 0 16px #ef4444cc !important;
+            background: #0a0a0f;
+            min-height: 100vh;
         }
 
-        .neon-btn { 
-            background: linear-gradient(90deg, #06b6d4, #a21caf, #0fffc1); 
-            color: #fff; 
-            font-weight: bold; 
-            box-shadow: 0 0 16px #06b6d4cc, 0 0 32px #a21cafcc; 
-            border: none; 
-            transition: background 0.2s, box-shadow 0.2s, transform 0.1s; /* Added transform for active */
-        }
-        .neon-btn:hover { 
-            background: linear-gradient(90deg, #0fffc1, #a21caf, #06b6d4); 
-            box-shadow: 0 0 32px #0fffc1cc, 0 0 48px #a21cafcc; 
-            transform: scale(1.02); /* Slight scale on hover */
-        }
-        .neon-btn:active { 
-            transform: scale(0.97); /* Press effect on click */
-        }
-
-        /* Specific styles for the main login button */
-        .login-btn {
-            background: linear-gradient(90deg, #06b6d4, #a21caf, #0fffc1);
-            color: #fff;
-            font-weight: bold;
-            border: none;
-            border-radius: 0.75rem;
-            padding: 0.75rem 0;
-            font-size: 1.1rem;
-            margin-top: 1.5rem;
-            width: 100%;
-            box-shadow: 0 0 16px #06b6d4cc;
-            transition: background 0.2s, transform 0.1s; /* Added transform */
-        }
-        .login-btn:hover {
-            background: linear-gradient(90deg, #0fffc1, #a21caf, #06b6d4);
-            transform: scale(1.02); /* Slight scale on hover */
-        }
-        .login-btn:active {
-            transform: scale(0.97); /* Press effect on click */
-        }
-
-        .social-login {
-            margin-top: 2rem;
+        /* Container */
+        .container {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
             align-items: center;
-            width: 100%;
-        }
-        .social-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: #fff;
-            color: #181830;
-            font-weight: 600;
-            border-radius: 0.75rem;
-            padding: 0.75rem 2rem;
-            box-shadow: 0 0 12px #06b6d4cc;
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s, transform 0.1s; /* Added transform */
-        }
-        .social-btn:hover {
-            background: #e0e7ff;
-            color: #a21caf;
-            transform: translateY(-2px); /* Subtle lift on hover */
-        }
-        .social-btn:active {
-            transform: scale(0.98); /* Press effect on click */
+            justify-content: center;
+            min-height: 100vh;
+            position: relative;
+            z-index: 10;
         }
 
-        /* OR separator style */
-        .or-separator {
-            display: flex;
-            align-items: center;
+        /* Background */
+        .background {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: url('/assets/backgrounds/3d-abstract-background-with-neon-lights-3d-illustration_441797-460.jpg') center/cover no-repeat;
+            z-index: 0;
+        }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        /* Neon button styles */
+        .neon-btn, .login-btn, .social-btn {
+            transition: all 0.3s ease-in-out;
+        }
+        .neon-btn:hover, .login-btn:hover, .social-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Inputs */
+        .neon-input {
+            background: rgba(24, 24, 48, 0.9);
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 10px #06b6d4aa;
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            color: #fff;
+        }
+        .neon-input:focus {
+            outline: none;
+            border-color: #a21caf;
+            box-shadow: 0 0 20px #a21caf99, 0 0 30px #06b6d4aa;
+        }
+
+        /* Card */
+        .glass-card {
+            background: rgba(24, 24, 48, 0.85);
+            border: 2px solid #06b6d4;
+            border-radius: 1rem;
+            box-shadow: 0 0 30px #06b6d4aa, 0 8px 32px #a21caf77;
+            backdrop-filter: blur(20px);
+            max-width: 420px;
+            width: 90%;
+            padding: 2rem;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #06b6d4, #a21caf, #0fffc1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
             text-align: center;
-            width: 100%;
-            margin: 1.5rem 0;
-            color: #bbb; /* A soft grey */
         }
-        .or-separator::before,
-        .or-separator::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #333; /* Darker line */
-        }
-        .or-separator:not(:empty)::before {
-            margin-right: .75em;
-        }
-        .or-separator:not(:empty)::after {
-            margin-left: .75em;
-        }
-
-        @media (max-width: 900px) {
-            .login-container { flex-direction: column; }
-            .glass-card { margin: 4vh auto; }
-        }
-        /* === END: New/Polished CSS === */
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center" style="background: #0a0a0f;">
-    <div class="absolute inset-0 z-0">
-        <div style="background-image: url('/assets/backgrounds/3d-abstract-background-with-neon-lights-3d-illustration_441797-460.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0;"></div>
-        <div class="absolute inset-0 bg-black bg-opacity-70"></div>
-    </div>
-    <div class="relative z-10 w-full flex flex-col items-center justify-center min-h-screen">
-        <div class="w-full flex justify-center" style="position:relative; z-index:20; margin-top:2rem; margin-bottom:2rem;">
-            <a href="dashboard.html" class="rounded-2xl px-8 py-4 shadow-xl border-2 border-cyan-400/60 bg-gradient-to-r from-cyan-900/80 via-fuchsia-900/70 to-purple-900/80 backdrop-blur-lg flex items-center gap-4 justify-center neon-glow hover:scale-105 transition-transform duration-200 mx-auto">
-                <span class="text-4xl">💸</span>
-                <span class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent tracking-wide drop-shadow-lg">FundFlow</span>
-            </a>
-        </div>
-        <div class="glass-card w-full max-w-md mx-auto rounded-2xl shadow-2xl p-8 flex flex-col gap-6 items-center border-2 border-cyan-400/40">
-            <h1 class="text-3xl font-extrabold bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent mb-2 text-center">Login to Fundflow</h1>
-            <form class="w-full flex flex-col gap-4">
-                <input type="text" placeholder="Name" class="neon-input px-3 py-2 rounded-lg border border-cyan-400/40 bg-black/40 text-cyan-100 focus:ring-2 focus:ring-cyan-400 placeholder:text-cyan-400">
-                <input type="number" placeholder="Age" class="neon-input px-3 py-2 rounded-lg border border-cyan-400/40 bg-black/40 text-cyan-100 focus:ring-2 focus:ring-cyan-400 placeholder:text-cyan-400">
-                <input type="email" placeholder="Email" class="neon-input px-3 py-2 rounded-lg border border-cyan-400/40 bg-black/40 text-cyan-100 focus:ring-2 focus:ring-cyan-400 placeholder:text-cyan-400">
-                <input type="password" placeholder="Password" class="neon-input px-3 py-2 rounded-lg border border-cyan-400/40 bg-black/40 text-cyan-100 focus:ring-2 focus:ring-cyan-400 placeholder:text-cyan-400">
-                <button type="submit" class="login-btn">Login</button>
+<body>
+    <div class="background"></div>
+    <div class="overlay"></div>
+    <div class="container">
+        <a href="dashboard.html" class="logo">💸 FundFlow</a>
+        <div class="glass-card">
+            <h1 class="text-xl text-center text-white font-bold mb-4">Login to FundFlow</h1>
+            <form class="flex flex-col gap-4">
+                <input type="text" placeholder="Name" class="neon-input">
+                <input type="number" placeholder="Age" class="neon-input">
+                <input type="email" placeholder="Email" class="neon-input">
+                <input type="password" placeholder="Password" class="neon-input">
+                <button class="login-btn bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-500 py-2 rounded-md text-white font-bold">Login</button>
             </form>
-
-            <div class="or-separator">OR</div>
-
-            <div class="social-login">
-                <button class="social-btn" id="googleLoginBtn">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" style="width:1.5rem;">
-                    Continue with Google
+            <div class="or-separator text-gray-300 text-center my-4">OR</div>
+            <div class="flex flex-col gap-2">
+                <button class="social-btn bg-white text-black py-2 rounded-md font-semibold flex items-center justify-center gap-2">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" width="20"> Continue with Google
                 </button>
-                <button class="social-btn" id="githubLoginBtn">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" style="width:1.5rem;">
-                    Continue with GitHub
+                <button class="social-btn bg-white text-black py-2 rounded-md font-semibold flex items-center justify-center gap-2">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" width="20"> Continue with GitHub
                 </button>
             </div>
         </div>
     </div>
-    <script>
-       document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form');
-
-    // Add this check to ensure the form was found before proceeding
-    if (!form) {
-        console.error('Login form not found on the page!');
-        return; // Stop script execution if form is not found
-    }
-
-    const nameInput = document.querySelector('input[placeholder="Name"]');
-    const ageInput = document.querySelector('input[placeholder="Age"]');
-    const emailInput = document.querySelector('input[placeholder="Email"]');
-    const passwordInput = document.querySelector('input[placeholder="Password"]');
-
-    const errorMessageDiv = document.createElement('div');
-    errorMessageDiv.className = 'text-red-400 text-sm mt-2 text-center font-medium';
-    errorMessageDiv.style.display = 'none';
-    
-    // Ensure the button exists before trying to insertBefore it
-    const submitButton = form.querySelector('button[type="submit"]');
-    if (submitButton) {
-        form.insertBefore(errorMessageDiv, submitButton);
-    } else {
-        // Fallback: if submit button not found, append to form
-        form.appendChild(errorMessageDiv);
-        console.warn('Submit button not found in form, error messages might not appear in optimal location.');
-    }
-
-    form.addEventListener('submit', function(e) {
-        console.log('Form submission attempted!'); // Keep this for debugging
-        e.preventDefault(); // Stop the default form submission
-
-        let isValid = true;
-        let messages = [];
-
-        // Reset error states
-        nameInput.classList.remove('error');
-        ageInput.classList.remove('error');
-        emailInput.classList.remove('error');
-        passwordInput.classList.remove('error');
-        errorMessageDiv.style.display = 'none'; // Hide previous error messages
-
-        // Simple validation checks
-        if (nameInput && nameInput.value.trim() === '') {
-            isValid = false;
-            messages.push('Name is required.');
-            nameInput.classList.add('error');
-        }
-
-        if (ageInput && ageInput.value.trim() === '') {
-            isValid = false;
-            messages.push('Age is required.');
-            ageInput.classList.add('error');
-        }
-
-        if (emailInput && emailInput.value.trim() === '') {
-            isValid = false;
-            messages.push('Email is required.');
-            emailInput.classList.add('error');
-        }
-
-        if (passwordInput && passwordInput.value.trim() === '') {
-            isValid = false;
-            messages.push('Password is required.');
-            passwordInput.classList.add('error');
-        }
-
-        if (!isValid) {
-            errorMessageDiv.textContent = messages.join(' '); // Display all messages
-            errorMessageDiv.style.display = 'block'; // Show error message
-        } else {
-            // If all valid, redirect to dashboard
-            window.location.href = 'dashboard.html';
-        }
-    });
-
-    const googleLoginBtn = document.getElementById('googleLoginBtn');
-    const githubLoginBtn = document.getElementById('githubLoginBtn');
-
-    if (googleLoginBtn) {
-        googleLoginBtn.addEventListener('click', function() {
-            window.location.href = 'https://accounts.google.com/signin';
-        });
-    }
-
-    if (githubLoginBtn) {
-        githubLoginBtn.addEventListener('click', function() {
-            window.location.href = 'https://github.com/login/oauth/authorize';
-        });
-    }
-});
-    </script>
 </body>
 </html>
