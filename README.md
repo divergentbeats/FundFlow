@@ -37,8 +37,13 @@ To run FundFlow on your local machine:
 
 Bash
 
+
 git clone https://github.com/divergentbeats/FundFlow.git
+
 cd FundFlow
+
 npm install
+
 npm run dev
+
 
